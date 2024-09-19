@@ -55,4 +55,4 @@ serviceAccount:
   automountServiceAccountToken: false
 
 secret:
-  create: false
+  enabled: false
