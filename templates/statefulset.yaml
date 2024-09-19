@@ -1,0 +1,200 @@
+{{- if eq .Values.app.kind "StatefulSet" }}
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: {{ include "universal.fullname" . }}
+  namespace: {{ include "universal.namespace" . }}
+  labels:
+    {{- include "universal.labels" . | nindent 4 }}
+    {{- with .Values.app.labels }}
+    {{- toYaml . | nindent 4 }}
+    {{- end }}
+  {{- with .Values.app.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+spec:
+  replicas: {{ .Values.app.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "universal.selectorLabels" . | nindent 6 }}
+  serviceName: {{ include "universal.fullname" . }}-headless
+  template:
+    metadata:
+      labels:
+        {{- include "universal.selectorLabels" . | nindent 8 }}
+        {{- with .Values.app.podLabels }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+      annotations:
+        {{- if .Values.configmap.enabled }}
+        {{- $_ := set .Values.app.podAnnotations "checksum/config" (include (print $.Template.BasePath "/configmap.yaml") . | sha256sum) }}
+        {{- end }}
+        {{- if .Values.secret.enabled }}
+        {{- $_ := set .Values.app.podAnnotations "checksum/secret" (include (print $.Template.BasePath "/secret.yaml") . | sha256sum) }}
+        {{- end }}
+        {{- .Values.app.podAnnotations | toYaml | nindent 8 }}
+    spec:
+      {{- with .Values.podSecurityContext }}
+      securityContext:
+        {{- . | toYaml | nindent 8 }}
+      {{- end }}
+      tolerations:
+      - key: node.kubernetes.io/not-ready
+        effect: NoExecute
+        tolerationSeconds: 0
+      - key: node.kubernetes.io/unreachable
+        effect: NoExecute
+        tolerationSeconds: 0
+      {{- with .Values.app.affinity }}
+      affinity:
+        {{- . | toYaml | nindent 8 }}
+      {{- end }}
+      shareProcessNamespace: {{ .Values.app.shareProcessNamespace }}
+      containers:
+      - name: {{ include "universal.fullname" . }}
+        image: "{{ .Values.app.image.name }}:{{ .Values.app.image.tag }}"
+        imagePullPolicy: {{ .Values.app.image.pullPolicy }}
+        {{- with .Values.app.securityContext }}
+        securityContext:
+          {{- . | toYaml | nindent 10 }}
+        {{- end }}
+        {{- with .Values.app.command }}
+        command:
+          {{- toYaml . | nindent 8 }}
+        {{- end }}
+        {{- with .Values.app.commandArgs }}
+        args:
+          {{- toYaml . | nindent 8 }}
+        {{- end }}
+        {{- with .Values.app.ports }}
+        ports:
+          {{- toYaml . | nindent 10 }}
+        {{- end }}
+        {{- with .Values.app.livenessProbe }}
+        livenessProbe:
+          {{- toYaml . | nindent 10 }}
+        {{- end }}
+        {{- with .Values.app.readinessProbe }}
+        readinessProbe:
+          {{- toYaml . | nindent 10 }}
+        {{- end }}
+        {{- with .Values.app.startupProbe }}
+        startupProbe:
+          {{- toYaml . | nindent 10 }}
+        {{- end }}
+        {{- with .Values.app.resources }}
+        resources:
+          {{- toYaml . | nindent 10 }}
+        {{- end }}
+        {{- with .Values.app.env }}
+        env:
+          {{- toYaml . | nindent 10 }}
+        {{- end }}
+        {{- with .Values.app.envFrom }}
+        envFrom:
+          {{- toYaml . | nindent 10 }}
+        {{- end }}
+        {{- with .Values.app.volumeMounts }}
+        volumeMounts:
+          {{- toYaml . | nindent 10 }}
+        {{- end }}
+      {{- with .Values.app.secondary }}
+      - name: {{ .name }}
+        image: "{{ .image.name }}:{{ .image.tag }}"
+        imagePullPolicy: {{ .image.pullPolicy }}
+        {{- with .securityContext }}
+        securityContext:
+          {{- . | toYaml | nindent 10 }}
+        {{- end }}
+        {{- with .command }}
+        command:
+          {{- . | toYaml | nindent 10 }}
+        {{- end }}
+        {{- with .commandArgs }}
+        args:
+          {{- . | toYaml | nindent 10 }}
+        {{- end }}
+        {{- with .ports }}
+        ports:
+          {{- toYaml . | nindent 10 }}
+        {{- end }}
+        {{- with .livenessProbe }}
+        livenessProbe:
+          {{- toYaml . | nindent 10 }}
+        {{- end }}
+        {{- with .readinessProbe }}
+        readinessProbe:
+          {{- toYaml . | nindent 10 }}
+        {{- end }}
+        {{- with .resources }}
+        resources:
+          {{- toYaml . | nindent 10 }}
+        {{- end }}
+        {{- with .env }}
+        env:
+          {{- toYaml . | nindent 10 }}
+        {{- end }}
+        {{- with .envFrom }}
+        envFrom:
+          {{- toYaml . | nindent 10 }}
+        {{- end }}
+        {{- with .volumeMounts }}
+        volumeMounts:
+          {{- toYaml . | nindent 10 }}
+        {{- end }}
+      {{- end }}
+      {{- range .Values.app.sidecars }}
+      - name: {{ .name }}
+        image: "{{ .image.name }}:{{ .image.tag }}"
+        imagePullPolicy: {{ .image.pullPolicy }}
+          {{- with .securityContext }}
+        securityContext:
+            {{- . | toYaml | nindent 10 }}
+          {{- end }}
+          {{- with .command }}
+        command:
+            {{- . | toYaml | nindent 10 }}
+          {{- end }}
+          {{- with .commandArgs }}
+        args:
+            {{- . | toYaml | nindent 10 }}
+          {{- end }}
+          {{- with .ports }}
+        ports:
+            {{- toYaml . | nindent 10 }}
+          {{- end }}
+          {{- with .livenessProbe }}
+        livenessProbe:
+            {{- toYaml . | nindent 10 }}
+          {{- end }}
+          {{- with .readinessProbe }}
+        readinessProbe:
+            {{- toYaml . | nindent 10 }}
+          {{- end }}
+          {{- with .resources }}
+        resources:
+            {{- toYaml . | nindent 10 }}
+          {{- end }}
+          {{- with .env }}
+        env:
+            {{- toYaml . | nindent 10 }}
+          {{- end }}
+          {{- with .envFrom }}
+        envFrom:
+            {{- toYaml . | nindent 10 }}
+          {{- end }}
+          {{- with .volumeMounts }}
+        volumeMounts:
+            {{- toYaml . | nindent 10 }}
+          {{- end }}
+      {{- end }}
+      {{- with .Values.app.volumes }}
+      volumes:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+  {{- with .Values.app.volumeClaimTemplates }}
+  volumeClaimTemplates:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+{{- end }}

@@ -1,0 +1,59 @@
+{{- if .Values.service.enabled }}
+{{- range .Values.service.list }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ if and .name ( not .name_suffix ) }}{{ .name }}{{ else if and .name .name_suffix }}{{ printf "%s-%s" .name .name_suffix }}{{ else if and ( not .name ) .name_suffix }}{{ printf "%s-%s" ( include "universal.fullname" $ ) .name_suffix }}{{ else }}{{ include "universal.fullname" $ }}{{ end }}
+  namespace: {{ include "universal.namespace" $ }}
+  labels:
+    {{- include "universal.labels" $ | nindent 4 }}
+    {{- with .labels }}
+    {{- toYaml . | nindent 4 }}
+    {{- end }}
+  {{- with .annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+spec:
+  {{- if (or (eq .type "ClusterIP") (empty .type)) }}
+  type: ClusterIP
+  {{- with .clusterIP }}
+  clusterIP: {{ . }}
+  {{- end }}
+  {{- else if eq .type "LoadBalancer" }}
+  type: LoadBalancer
+  {{- with .loadBalancerIP }}
+  loadBalancerIP: {{ . }}
+  {{- end }}
+  {{- with .loadBalancerClass }}
+  loadBalancerClass: {{ . }}
+  {{- end }}
+  {{- with .loadBalancerSourceRanges }}
+  loadBalancerSourceRanges:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+  {{- else }}
+  type: {{ .type }}
+  {{- end }}
+  {{- if .ipFamilyPolicy }}
+  ipFamilyPolicy: {{ .ipFamilyPolicy }}
+  {{- end }}
+  {{- if .ipFamilies }}
+  ipFamilies: {{ .ipFamilies | toYaml | nindent 2 }}
+  {{- end }}
+  {{- with .externalIPs }}
+  externalIPs:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+  {{- with .externalTrafficPolicy }}
+  externalTrafficPolicy: {{ . }}
+  {{- end }}
+  {{- with .ports }}
+  ports:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+  selector:
+    {{- include "universal.selectorLabels" $ | nindent 4 }}
+{{- end }}
+{{- end }}

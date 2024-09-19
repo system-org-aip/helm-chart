@@ -1,0 +1,58 @@
+global:
+  nameOverride: ""
+  fullnameOverride: ""
+  namespaceOverride: ""
+  labels: {}
+
+app:
+  kind: Deployment # StatefulSet or Deployment
+  lebels: {}
+  annotations: {}
+  replicaCount: 1
+  revisionHistoryLimit: 1 # if kind == "Deployment"
+  strategy: {} # if kind == "Deployment"
+  podLabels: {}
+  podAnnotations: {}
+  affinity: {}
+  shareProcessNamespace: ""
+  image:
+    name: ""
+    tag: ""
+    pullPolicy: Always
+  securityContext: {}
+  command: {}
+  commandArgs: {}
+  ports: {}
+  resources: {}
+  livenessProbe: {}
+  readinessProbe: {}
+  startupProbe: {}
+  env: {}
+  envFrom: {}
+  volumeMounts: {}
+  volumeClaimTemplates: [] # if kind == "StatefulSet"
+
+service:
+  enabled: false
+  list:
+    - name: "" # if empty, will be used universl.fullname (opt. universl.fullname + .name_suffix)
+      name_suffix: "" # if emty, will be used universl.fullname or .name
+      labels: {}
+      annotations: {}
+      type: ClusterIP
+      isHeadless: false
+      ports: {}
+
+configmap:
+  enabled: false
+  data: {}
+
+serviceAccount:
+  create: false
+  name: "" # if not set, the common name will be used
+  labels: {}
+  annotations: {}
+  automountServiceAccountToken: false
+
+secret:
+  create: false
