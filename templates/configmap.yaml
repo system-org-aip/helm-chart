@@ -18,7 +18,7 @@ data:
   {{- toYaml . | nindent 2 }}
 {{- end }}
 {{- end }}
-{{ if .Values.auth.enabled }}
+{{ if .Values.app.auth.enabled }}
 ---
 apiVersion: v1
 kind: ConfigMap
