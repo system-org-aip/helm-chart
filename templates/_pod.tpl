@@ -1,5 +1,5 @@
 {{- define "universal.pod" -}}
-serviceAccountName: {{ include "universal.serviceAccountName" . }}
+serviceAccountName: {{ .Values.app.serviceAccountName | default (include "universal.serviceAccountName" .) }}
 {{- with .Values.app.podSecurityContext }}
 securityContext:
   {{- toYaml . | nindent 2 }}
