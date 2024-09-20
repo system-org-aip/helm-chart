@@ -13,7 +13,7 @@ app:
   strategy: {} # if kind == "Deployment"
   auth:
     enabled: false
-    nginxTag: 1.27.1
+    nginxVer: 1.27.1
     nginxProxyPassPort: 3000
     nginxListenPort: 80
     resources:

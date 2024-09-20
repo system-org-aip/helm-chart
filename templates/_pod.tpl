@@ -1,5 +1,5 @@
 {{- define "universal.pod" -}}
-{{- with .Values.podSecurityContext }}
+{{- with .Values.app.podSecurityContext }}
 securityContext:
 {{- . | toYaml | nindent 8 }}
 {{- end }}
