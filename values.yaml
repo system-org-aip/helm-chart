@@ -16,6 +16,9 @@ app:
     nginxTag: 1.27.1
     nginxProxyPassPort: 3000
     nginxListenPort: 80
+    resources:
+      memory: 50Mi
+      cpu: 50m
   podLabels: {}
   podAnnotations: {}
   affinity: {}
