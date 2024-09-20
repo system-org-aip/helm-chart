@@ -161,7 +161,7 @@ containers:
     ports:
       - containerPort: 80
         name: http
-        volumeMounts:
+    volumeMounts:
       - name: config
         mountPath: /etc/nginx/conf.d/
     resources:
