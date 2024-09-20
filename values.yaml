@@ -28,6 +28,7 @@ app:
     name: ""
     tag: ""
     pullPolicy: Always
+  serviceAccountName: ""
   podSecurityContext: {}
   securityContext: {}
   command: {}
