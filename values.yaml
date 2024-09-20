@@ -41,7 +41,7 @@ app:
   volumeMounts: {}
   volumeClaimTemplates: {} # if kind == "StatefulSet"
   volumes: {}
-  extraContainers: {}
+  extraContainer: {}
   sidecarContainers: {}
 
 service:

@@ -64,7 +64,7 @@ containers:
     volumeMounts:
       {{- toYaml . | nindent 6 }}
     {{- end }}
-  {{- with .Values.app.extraContainers }}
+  {{- with .Values.app.extraContainer }}
   - name: {{ .name }}
     image: "{{ .image.name }}:{{ .image.tag }}"
     imagePullPolicy: {{ .image.pullPolicy }}
