@@ -1,4 +1,5 @@
 {{- if eq .Values.app.kind "StatefulSet" }}
+---
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:

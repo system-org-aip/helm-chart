@@ -16,6 +16,12 @@ affinity:
   {{- toYaml . | nindent 2 }}
 {{- end }}
 shareProcessNamespace: {{ .Values.app.shareProcessNamespace }}
+{{- if .Values.app.auth.enabled }}
+volumes:
+  - name: config
+    configMap:
+      name: {{ printf "%s-%s" ( include "universal.fullname" . ) "nginx-auth" }}
+{{- end }}
 containers:
   - name: {{ include "universal.fullname" . }}
     image: "{{ .Values.app.image.name }}:{{ .Values.app.image.tag }}"
@@ -154,7 +160,7 @@ containers:
       {{- toYaml . | nindent 6 }}
     {{- end }}
   {{- end }}
-  {{ if .Values.app.auth.enabled }}
+  {{- if .Values.app.auth.enabled }}
   - name: nginx-auth
     image: nginx:{{ .Values.app.auth.nginxVer }}
     imagePullPolicy: IfNotPresent

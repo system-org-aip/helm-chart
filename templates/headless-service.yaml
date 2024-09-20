@@ -1,4 +1,5 @@
 {{- if .Values.service.headlessService }}
+---
 apiVersion: v1
 kind: Service
 metadata:
