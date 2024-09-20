@@ -5,12 +5,12 @@ securityContext:
   {{- toYaml . | nindent 2 }}
 {{- end }}
 tolerations:
-- key: node.kubernetes.io/not-ready
-effect: NoExecute
-tolerationSeconds: 0
-- key: node.kubernetes.io/unreachable
-effect: NoExecute
-tolerationSeconds: 0
+  - key: node.kubernetes.io/not-ready
+    effect: NoExecute
+    tolerationSeconds: 0
+  - key: node.kubernetes.io/unreachable
+    effect: NoExecute
+    tolerationSeconds: 0
 {{- with .Values.app.affinity }}
 affinity:
   {{- toYaml . | nindent 2 }}
@@ -22,7 +22,7 @@ containers:
     imagePullPolicy: {{ .Values.app.image.pullPolicy }}
     {{- with .Values.app.securityContext }}
     securityContext:
-      {{- . | toYaml | nindent 6 }}
+      {{- toYaml . | nindent 6 }}
     {{- end }}
     {{- with .Values.app.command }}
     command:
@@ -70,15 +70,15 @@ containers:
     imagePullPolicy: {{ .image.pullPolicy }}
     {{- with .securityContext }}
     securityContext:
-      {{- . | toYaml | nindent 6 }}
+      {{- toYaml . | nindent 6 }}
     {{- end }}
     {{- with .command }}
     command:
-      {{- . | toYaml | nindent 6 }}
+      {{- toYaml . | nindent 6 }}
     {{- end }}
     {{- with .commandArgs }}
     args:
-      {{- . | toYaml | nindent 6 }}
+      {{- toYaml . | nindent 6 }}
     {{- end }}
     {{- with .ports }}
     ports:
@@ -115,15 +115,15 @@ containers:
     imagePullPolicy: {{ .image.pullPolicy }}
     {{- with .securityContext }}
     securityContext:
-      {{- . | toYaml | nindent 6 }}
+      {{- toYaml . | nindent 6 }}
     {{- end }}
     {{- with .command }}
     command:
-      {{- . | toYaml | nindent 6 }}
+      {{- toYaml . | nindent 6 }}
     {{- end }}
     {{- with .commandArgs }}
     args:
-      {{- . | toYaml | nindent 6 }}
+      {{- toYaml . | nindent 6 }}
     {{- end }}
     {{- with .ports }}
     ports:
