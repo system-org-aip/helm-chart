@@ -41,6 +41,8 @@ app:
   volumeMounts: {}
   volumeClaimTemplates: {} # if kind == "StatefulSet"
   volumes: {}
+  secondary: {}
+  sidecar: {}
 
 service:
   enabled: false

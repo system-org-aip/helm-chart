@@ -154,7 +154,7 @@ volumeMounts:
     {{- end }}
 {{- end }}
 {{ if .Values.app.auth.enabled }}
-- image: {{ printf "%s:%s" "nginx" .Values.app.auth.nginxVer }}
+- image: nginx:{{ .Values.app.auth.nginxVer }}
 name: auth
 imagePullPolicy: IfNotPresent
 ports:
