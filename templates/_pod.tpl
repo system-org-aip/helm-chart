@@ -108,8 +108,8 @@ containers:
     volumeMounts:
       {{- toYaml . | nindent 6 }}
     {{- end }}
-    {{- end }}
-    {{- range .Values.app.sidecarContainers }}
+  {{- end }}
+  {{- range .Values.app.sidecarContainers }}
   - name: {{ .name }}
     image: "{{ .image.name }}:{{ .image.tag }}"
     imagePullPolicy: {{ .image.pullPolicy }}
@@ -153,7 +153,7 @@ containers:
     volumeMounts:
       {{- toYaml . | nindent 6 }}
     {{- end }}
-    {{- end }}
+  {{- end }}
   {{ if .Values.app.auth.enabled }}
   - name: auth
     image: nginx:{{ .Values.app.auth.nginxVer }}
