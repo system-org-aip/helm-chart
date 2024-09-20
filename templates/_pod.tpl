@@ -165,11 +165,11 @@ volumeMounts:
     mountPath: /etc/nginx/conf.d/
 resources:
     limits:
-    cpu: {{ .Values.auth.resources.cpu }}
-    memory: {{ .Values.auth.resources.memory }}
+    cpu: {{ .Values.app.auth.resources.cpu }}
+    memory: {{ .Values.app.auth.resources.memory }}
     requests:
-    cpu: {{ .Values.auth.resources.cpu }}
-    memory: {{ .Values.auth.resources.memory }}
+    cpu: {{ .Values.app.auth.resources.cpu }}
+    memory: {{ .Values.app.auth.resources.memory }}
 {{- end }}
 {{- with .Values.app.volumes }}
 volumes:

@@ -38,7 +38,8 @@ app:
   env: {}
   envFrom: {}
   volumeMounts: {}
-  volumeClaimTemplates: [] # if kind == "StatefulSet"
+  volumeClaimTemplates: {} # if kind == "StatefulSet"
+  volumes: {}
 
 service:
   enabled: false
