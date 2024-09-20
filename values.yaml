@@ -11,6 +11,11 @@ app:
   replicaCount: 1
   revisionHistoryLimit: 1 # if kind == "Deployment"
   strategy: {} # if kind == "Deployment"
+  auth:
+    enabled: false
+    nginxTag: 1.27.1
+    nginxProxyPassPort: 3000
+    nginxListenPort: 80
   podLabels: {}
   podAnnotations: {}
   affinity: {}
