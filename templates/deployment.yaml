@@ -31,12 +31,6 @@ spec:
         {{- toYaml . | nindent 8 }}
         {{- end }}
       annotations:
-        {{- if .Values.configmap.enabled }}
-        {{- $_ := set .Values.app.podAnnotations "checksum/config" (include (print $.Template.BasePath "/configmap.yaml") . | sha256sum) }}
-        {{- end }}
-        {{- if .Values.secret.enabled }}
-        {{- $_ := set .Values.app.podAnnotations "checksum/secret" (include (print $.Template.BasePath "/secret.yaml") . | sha256sum) }}
-        {{- end }}
         {{- .Values.app.podAnnotations | toYaml | nindent 8 }}
     spec:
       {{- include "universal.pod" . | nindent 6 }}
