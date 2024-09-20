@@ -57,3 +57,21 @@ spec:
     {{- include "universal.selectorLabels" $ | nindent 4 }}
 {{- end }}
 {{- end }}
+{{- if .Values.app.auth.enabled }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    {{- include "universal.labels" . | nindent 4 }}
+  name: {{ printf "%s-%s" ( include "universal.fullname" . ) "nginx-auth" }}
+  namespace: {{ include "universal.namespace" . }}
+spec:
+  ports:
+    - port: {{ .Values.app.auth.nginxListenPort }}
+      targetPort: {{ .Values.app.auth.nginxListenPort }}
+  selector:
+    {{- include "universal.selectorLabels" . | nindent 4 }}
+  type: NodePort
+  internalTrafficPolicy: Cluster
+{{- end }}
