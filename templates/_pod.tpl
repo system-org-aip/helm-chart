@@ -175,3 +175,4 @@ resources:
 volumes:
 {{- toYaml . | nindent 8 }}
 {{- end }}
+{{- end }}
