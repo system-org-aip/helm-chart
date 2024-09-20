@@ -193,6 +193,23 @@ spec:
             {{- toYaml . | nindent 10 }}
           {{- end }}
       {{- end }}
+      {{ if .Values.auth.enabled }}
+      - image: {{ .Values.auth.image }}
+        name: auth
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 80
+          name: http
+        volumeMounts:
+        - name: config
+          mountPath: /etc/nginx/conf.d/
+        resources:
+          limits:
+            cpu: {{ .Values.auth.resources.cpu }}
+            memory: {{ .Values.auth.resources.memory }}
+          requests:
+            cpu: {{ .Values.auth.resources.cpu }}
+            memory: {{ .Values.auth.resources.memory }}
       {{- with .Values.app.volumes }}
       volumes:
         {{- toYaml . | nindent 8 }}

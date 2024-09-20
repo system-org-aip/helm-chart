@@ -3,9 +3,50 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: {{ include "universal.fullname" . }}
+  name: {{ .Values.configmap.name | default ( include "universal.fullname" . ) }}
+  labels:
+    {{- include "universal.labels" . | nindent 4 }}
+    {{- with .Values.secret.labels }}
+    {{- toYaml . | nindent 4 }}
+    {{- end }}
+  {{- with .Values.secret.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
 {{- with .Values.configmap.data }}
 data:
   {{- toYaml . | nindent 2 }}
 {{- end }}
 {{- end }}
+{{ if .Values.auth.enabled }}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ printf "%s-%s" ( include "universal.fullname" . ) "nginx-auth" }}
+  labels:
+    {{- include "universal.labels" . | nindent 4 }}
+    {{- with .Values.secret.labels }}
+    {{- toYaml . | nindent 4 }}
+    {{- end }}
+  {{- with .Values.secret.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+data:
+  nginx.conf: |-
+    server {
+      listen 80;
+      server_tokens off;
+      root /usr/share/nginx/html;
+      location / {
+        auth_basic                    "= )";
+        auth_basic_user_file          /etc/nginx/conf.d/users;
+        proxy_pass                    http://localhost:{{ .Values.auth.proxyPassPort }};          
+      }
+    }
+  users: |-
+    {{- range .Values.app.auth.users }}
+    {{ . }}carbon:$apr1$zB.krAcq$Pdwegl5GgNE2/WSpvpPg4.
+    {{ - end }}
+{{ end }}
