@@ -27,6 +27,7 @@ app:
     name: ""
     tag: ""
     pullPolicy: Always
+  podSecurityContext: {}
   securityContext: {}
   command: {}
   commandArgs: {}
