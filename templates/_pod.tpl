@@ -1,6 +1,6 @@
 {{- define "universal.pod" -}}
-{{- with .Values.app.podSecurityContext }}
 serviceAccountName: {{ include "universal.serviceAccountName" . }}
+{{- with .Values.app.podSecurityContext }}
 securityContext:
   {{- toYaml . | nindent 2 }}
 {{- end }}
