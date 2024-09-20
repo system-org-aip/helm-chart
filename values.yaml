@@ -19,6 +19,7 @@ app:
     resources:
       memory: 50Mi
       cpu: 50m
+    users: {}
   podLabels: {}
   podAnnotations: {}
   affinity: {}
