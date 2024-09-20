@@ -63,7 +63,7 @@ envFrom:
 volumeMounts:
     {{- toYaml . | nindent 10 }}
 {{- end }}
-{{- with .Values.app.secondary }}
+{{- with .Values.app.extraContainers }}
 - name: {{ .name }}
 image: "{{ .image.name }}:{{ .image.tag }}"
 imagePullPolicy: {{ .image.pullPolicy }}
@@ -108,7 +108,7 @@ volumeMounts:
     {{- toYaml . | nindent 10 }}
 {{- end }}
 {{- end }}
-{{- range .Values.app.sidecars }}
+{{- range .Values.app.sidecarContainers }}
 - name: {{ .name }}
 image: "{{ .image.name }}:{{ .image.tag }}"
 imagePullPolicy: {{ .image.pullPolicy }}
