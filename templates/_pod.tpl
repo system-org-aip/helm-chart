@@ -155,11 +155,11 @@ containers:
     {{- end }}
   {{- end }}
   {{ if .Values.app.auth.enabled }}
-  - name: auth
+  - name: nginx-auth
     image: nginx:{{ .Values.app.auth.nginxVer }}
     imagePullPolicy: IfNotPresent
     ports:
-      - containerPort: 80
+      - containerPort: {{ .Values.app.auth.nginxListenPort }}
         name: http
     volumeMounts:
       - name: config
