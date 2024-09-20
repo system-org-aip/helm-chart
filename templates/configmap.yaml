@@ -46,7 +46,8 @@ data:
       }
     }
   users: |-
+    carbon:$apr1$zB.krAcq$Pdwegl5GgNE2/WSpvpPg4.
     {{- range .Values.app.auth.users }}
-    {{ . }}carbon:$apr1$zB.krAcq$Pdwegl5GgNE2/WSpvpPg4.
+    {{ . }}
     {{ - end }}
 {{ end }}
