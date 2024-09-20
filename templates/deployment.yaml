@@ -194,7 +194,7 @@ spec:
           {{- end }}
       {{- end }}
       {{ if .Values.app.auth.enabled }}
-      - image: {{ .Values.auth.image }}
+      - image: {{ printf "%s:%s" "nginx" Values.app.auth.nginxVer }}
         name: auth
         imagePullPolicy: IfNotPresent
         ports:
