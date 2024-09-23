@@ -176,10 +176,6 @@ containers:
     volumeMounts:
       - name: config
         mountPath: /etc/nginx/conf.d/
-      - name: basic-auth-users
-        mountPath: /etc/nginx/conf.d/users
-        subPath: users
-        readOnly: true
     resources:
       limits:
         cpu: {{ .Values.app.auth.resources.cpu }}
