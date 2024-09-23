@@ -40,7 +40,7 @@ data:
       server_tokens off;
       root /usr/share/nginx/html;
       location / {
-        auth_basic            "= )";
+        auth_basic            "Authorization required.";
         auth_basic_user_file  /etc/nginx/conf.d/users;
         proxy_pass            http://localhost:{{ .Values.app.auth.nginxProxyPassPort }};
       }
