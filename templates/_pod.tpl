@@ -174,7 +174,7 @@ containers:
       - name: config
         mountPath: /etc/nginx/conf.d/
       - name: basic-auth-users
-        mountPath: /etc/nginx/conf.d/users
+        mountPath: /etc/nginx/conf.d
         subPath: users
         readOnly: true
     resources:
