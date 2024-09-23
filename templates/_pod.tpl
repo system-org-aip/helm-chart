@@ -24,6 +24,9 @@ volumes:
   - name: basic-auth-users
     secret:
       secretName: {{ .Values.app.auth.basicAuthSecret }}
+      items:
+        - key: users
+          path: users
 {{- end }}
 containers:
   - name: {{ include "universal.fullname" . }}
