@@ -68,5 +68,5 @@ serviceAccount:
   annotations: {}
   automountServiceAccountToken: false
 
-secret:
+secret: # argocd vault cmp + argocd image updater dont work
   enabled: false
