@@ -20,7 +20,7 @@ shareProcessNamespace: {{ .Values.app.shareProcessNamespace }}
 volumes:
   - name: config
     configMap:
-      name: {{ printf "%s-%s" ( include "universal.fullname" . ) "nginx-auth" }}
+      name: {{ .Values.app.auth.basicAuthSecret }}
 {{- end }}
 containers:
   - name: {{ include "universal.fullname" . }}

@@ -45,8 +45,4 @@ data:
         proxy_pass            http://localhost:{{ .Values.app.auth.nginxProxyPassPort }};
       }
     }
-  users: |-
-    {{- range .Values.app.auth.users }}
-    {{ . | indent 4 }}
-    {{- end }}
 {{ end }}

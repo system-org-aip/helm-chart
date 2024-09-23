@@ -19,7 +19,7 @@ app:
     resources:
       memory: 50Mi
       cpu: 50m
-    users: {}
+    basicAuthSecret: {}
   podLabels: {}
   podAnnotations: {}
   affinity: {}
