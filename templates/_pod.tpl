@@ -24,9 +24,6 @@ volumes:
   - name: basic-auth-users
     secret:
       secretName: {{ .Values.app.auth.basicAuthSecret }}
-      items:
-        - key: users
-          path: users
 {{- end }}
 containers:
   - name: {{ include "universal.fullname" . }}
@@ -178,7 +175,7 @@ containers:
         mountPath: /etc/nginx/conf.d/
         readOnly: true
       - name: basic-auth-users
-        mountPath: /etc/nginx/conf.d/users
+        mountPath: /etc/nginx/conf.d/
         readOnly: true
     resources:
       limits:
