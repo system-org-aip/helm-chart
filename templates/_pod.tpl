@@ -172,8 +172,8 @@ containers:
         name: http
     volumeMounts:
       - name: config
-        mountPath: /etc/nginx/conf.d/nginx.conf
-        subPath: nginx.conf
+        mountPath: /etc/nginx/conf.d/default.conf
+        subPath: default.conf
         readOnly: true
       - name: basic-auth-users
         mountPath: /etc/nginx/conf.d/users
