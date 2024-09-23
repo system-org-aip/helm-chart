@@ -20,6 +20,9 @@ shareProcessNamespace: {{ .Values.app.shareProcessNamespace }}
 volumes:
   - name: config
     configMap:
+      name: {{ printf "%s-%s" ( include "universal.fullname" . ) "nginx-auth" }}
+  - name: basic-auth-users
+    secret:
       name: {{ .Values.app.auth.basicAuthSecret }}
 {{- end }}
 containers:
@@ -170,6 +173,8 @@ containers:
     volumeMounts:
       - name: config
         mountPath: /etc/nginx/conf.d/
+      - name: basic-auth-users
+        mountPath: /etc/nginx/conf.d/users
     resources:
       limits:
         cpu: {{ .Values.app.auth.resources.cpu }}
