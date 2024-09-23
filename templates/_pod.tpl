@@ -173,9 +173,11 @@ containers:
     volumeMounts:
       - name: config
         mountPath: /etc/nginx/conf.d/
+        subPath: nginx.conf
         readOnly: true
       - name: basic-auth-users
         mountPath: /etc/nginx/conf.d/
+        subPath: users
         readOnly: true
     resources:
       limits:
