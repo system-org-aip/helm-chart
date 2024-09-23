@@ -23,7 +23,7 @@ volumes:
       name: {{ printf "%s-%s" ( include "universal.fullname" . ) "nginx-auth" }}
   - name: basic-auth-users
     secret:
-      name: {{ .Values.app.auth.basicAuthSecret }}
+      secretName: {{ .Values.app.auth.basicAuthSecret }}
 {{- end }}
 containers:
   - name: {{ include "universal.fullname" . }}
