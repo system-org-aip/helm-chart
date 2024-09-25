@@ -181,7 +181,7 @@ containers:
       - containerPort: {{ .Values.app.auth.nginxListenPort }}
         name: http
     volumeMounts:
-      - name: {{ printf "%s-%s" ( include "universal.fullname" . ) "nginx-config" }}
+      - name: {{ printf "%s-%s" ( include "universal.fullname" . ) "nginx-conf" }}
         mountPath: /etc/nginx/conf.d/default.conf
         subPath: default.conf
         readOnly: true
