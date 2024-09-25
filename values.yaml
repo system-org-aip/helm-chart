@@ -61,6 +61,7 @@ configmap:
   enabled: false
   name: "" # if empty, will be used universl.fullname (opt. universl.fullname + .nameSuffix)
   nameSuffix: "" # if empty, will be used universl.fullname or .name
+  createVolume: false
   data: {}
 
 serviceAccount:
