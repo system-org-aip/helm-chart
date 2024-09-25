@@ -40,9 +40,9 @@ app:
   startupProbe: {}
   env: {}
   envFrom: {}
-  volumeMounts: {}
+  volumes: {}  # mount inside pod
+  volumeMounts: {} # mount inside container
   volumeClaimTemplates: {} # if kind == "StatefulSet"
-  volumes: {}
   extraContainer: {}
   sidecarContainers: {}
 
@@ -50,7 +50,7 @@ service:
   enabled: false
   list:
     - name: "" # if empty, will be used universl.fullname (opt. universl.fullname + .name_suffix)
-      name_suffix: "" # if emty, will be used universl.fullname or .name
+      nameSuffix: "" # if emty, will be used universl.fullname or .name
       labels: {}
       annotations: {}
       type: ClusterIP
@@ -59,6 +59,8 @@ service:
 
 configmap:
   enabled: false
+  name: "" # if empty, will be used universl.fullname (opt. universl.fullname + .nameSuffix)
+  nameSuffix: "" # if empty, will be used universl.fullname or .name
   data: {}
 
 serviceAccount:

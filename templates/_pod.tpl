@@ -16,14 +16,24 @@ affinity:
   {{- toYaml . | nindent 2 }}
 {{- end }}
 shareProcessNamespace: {{ .Values.app.shareProcessNamespace }}
-{{- if .Values.app.auth.enabled }}
+{{- if or .Values.app.auth.enabled .Values.app.volumes .Values.configmap.createVolume }}
 volumes:
-  - name: config
+{{- with .Values.app.volumes }}
+  {{- toYaml . | nindent 2 }}
+{{- end }}
+{{- if .Values.app.auth.enabled }}
+  - name: {{ printf "%s-%s" ( include "universal.fullname" . ) "nginx-conf" }}
     configMap:
-      name: {{ printf "%s-%s" ( include "universal.fullname" . ) "nginx-auth" }}
-  - name: basic-auth-users
+      name: {{ printf "%s-%s" ( include "universal.fullname" . ) "nginx-conf" }}
+  - name: {{ printf "%s-%s" ( include "universal.fullname" . ) "nginx-auth-users" }}
     secret:
       secretName: {{ .Values.app.auth.basicAuthSecret }}
+{{- end }}
+{{- if .Values.configmap.createVolume }}
+  - name: {{ include "universal.configMapName" . }}
+    configMap:
+      name: {{ include "universal.configMapName" . }}
+{{- end }}
 {{- end }}
 containers:
   - name: {{ include "universal.fullname" . }}
@@ -171,11 +181,11 @@ containers:
       - containerPort: {{ .Values.app.auth.nginxListenPort }}
         name: http
     volumeMounts:
-      - name: config
+      - name: {{ printf "%s-%s" ( include "universal.fullname" . ) "nginx-config" }}
         mountPath: /etc/nginx/conf.d/default.conf
         subPath: default.conf
         readOnly: true
-      - name: basic-auth-users
+      - name: {{ printf "%s-%s" ( include "universal.fullname" . ) "nginx-auth-users" }}
         mountPath: /etc/nginx/conf.d/users
         subPath: users
         readOnly: true
@@ -187,8 +197,4 @@ containers:
         cpu: {{ .Values.app.auth.resources.cpu }}
         memory: {{ .Values.app.auth.resources.memory }}
   {{- end }}
-{{- with .Values.app.volumes }}
-volumes:
-  {{- toYaml . | nindent 2 }}
-{{- end }}
 {{- end }}

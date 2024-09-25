@@ -4,7 +4,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ if and .name ( not .name_suffix ) }}{{ .name }}{{ else if and .name .name_suffix }}{{ printf "%s-%s" .name .name_suffix }}{{ else if and ( not .name ) .name_suffix }}{{ printf "%s-%s" ( include "universal.fullname" $ ) .name_suffix }}{{ else }}{{ include "universal.fullname" $ }}{{ end }}
+  name: {{ if and .name ( not .nameSuffix ) }}{{ .name }}{{ else if and .name .nameSuffix }}{{ printf "%s-%s" .name .nameSuffix }}{{ else if and ( not .name ) .nameSuffix }}{{ printf "%s-%s" ( include "universal.fullname" $ ) .nameSuffix }}{{ else }}{{ include "universal.fullname" $ }}{{ end }}
   namespace: {{ include "universal.namespace" $ }}
   labels:
     {{- include "universal.labels" $ | nindent 4 }}

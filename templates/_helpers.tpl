@@ -75,3 +75,21 @@ Create the name of the service account
 {{- default "default" .Values.serviceAccount.name }}
 {{- end }}
 {{- end }}
+
+{{/*
+Create the name of the configmap
+*/}}
+{{- define "universal.configMapName" -}}
+{{- if and .Values.configmap.name ( not .Values.configmap.nameSuffix ) }}
+{{- .Values.configmap.name }}
+{{- else if and .Values.configmap.name .Values.configmap.nameSuffix }}
+{{- printf "%s-%s" .Values.configmap.name .Values.configmap.nameSuffix }}
+{{- else if and ( not .Values.configmap.name ) .Values.configmap.nameSuffix }}
+{{- printf "%s-%s" ( include "universal.fullname" $ ) .Values.configmap.nameSuffix }}
+{{- else }}
+{{- include "universal.fullname" $ }}
+{{- end }}
+
+{{/*
+Create the name of the configmap
+*/}}
