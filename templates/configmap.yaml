@@ -23,7 +23,7 @@ data:
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: {{ printf "%s-%s" ( include "universal.fullname" . ) "nginx-auth" }}
+  name: {{ printf "%s-%s" ( include "universal.fullname" . ) "nginx-conf" }}
   labels:
     {{- include "universal.labels" . | nindent 4 }}
     {{- with .Values.secret.labels }}
