@@ -89,7 +89,4 @@ Create the name of the configmap
 {{- else }}
 {{- include "universal.fullname" $ }}
 {{- end }}
-
-{{/*
-Create the name of the configmap
-*/}}
+{{- end }}
