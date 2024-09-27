@@ -90,3 +90,18 @@ Create the name of the configmap
 {{- include "universal.fullname" $ }}
 {{- end }}
 {{- end }}
+
+{{/*
+Create the name of the secret
+*/}}
+{{- define "universal.secretName" -}}
+{{- if and .Values.secret.name ( not .Values.secret.nameSuffix ) }}
+{{- .Values.secret.name }}
+{{- else if and .Values.secret.name .Values.secret.nameSuffix }}
+{{- printf "%s-%s" .Values.secret.name .Values.secret.nameSuffix }}
+{{- else if and ( not .Values.secret.name ) .Values.secret.nameSuffix }}
+{{- printf "%s-%s" ( include "universal.fullname" $ ) .Values.secret.nameSuffix }}
+{{- else }}
+{{- include "universal.fullname" $ }}
+{{- end }}
+{{- end }}
