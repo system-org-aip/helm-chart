@@ -41,7 +41,7 @@ imagePullSecrets:
 {{- end }}
 containers:
   - name: {{ include "universal.fullname" . }}
-    image: "{{ .Values.app.image.name }}:{{ .Values.app.image.tag }}"
+    image: "{{ .Values.app.image.name }}{{ if .Values.app.image.tag }}:{{ .Values.app.image.tag }}{{ end }}"
     imagePullPolicy: {{ .Values.app.image.pullPolicy }}
     {{- with .Values.app.securityContext }}
     securityContext:
@@ -89,7 +89,7 @@ containers:
     {{- end }}
   {{- with .Values.app.extraContainer }}
   - name: {{ .name }}
-    image: "{{ .image.name }}:{{ .image.tag }}"
+    image: "{{ .image.name }}{{ if .image.tag }}:{{ .image.tag }}{{ end }}"
     imagePullPolicy: {{ .image.pullPolicy }}
     {{- with .securityContext }}
     securityContext:
@@ -134,7 +134,7 @@ containers:
   {{- end }}
   {{- range .Values.app.sidecarContainers }}
   - name: {{ .name }}
-    image: "{{ .image.name }}:{{ .image.tag }}"
+    image: "{{ .image.name }}{{ if .image.tag }}:{{ .image.tag }}{{ end }}"
     imagePullPolicy: {{ .image.pullPolicy }}
     {{- with .securityContext }}
     securityContext:
