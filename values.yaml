@@ -44,7 +44,7 @@ app:
   volumeMounts: {} # mount inside container
   volumeClaimTemplates: {} # if kind == "StatefulSet"
   extraContainer: {}
-  sidecarContainers: {}
+  sidecarContainers: []
 
 service:
   enabled: false
