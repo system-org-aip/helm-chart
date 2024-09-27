@@ -31,15 +31,15 @@ app:
   serviceAccountName: ""
   podSecurityContext: {} # for pod level
   securityContext: {} # for container level
-  command: {}
-  commandArgs: {}
-  ports: {}
+  command: []
+  commandArgs: []
+  ports: []
   resources: {}
   livenessProbe: {}
   readinessProbe: {}
   startupProbe: {}
-  env: {}
-  envFrom: {}
+  env: []
+  envFrom: []
   volumes: {}  # mount inside pod
   volumeMounts: {} # mount inside container
   volumeClaimTemplates: {} # if kind == "StatefulSet"
