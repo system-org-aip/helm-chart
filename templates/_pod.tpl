@@ -35,6 +35,10 @@ volumes:
       name: {{ include "universal.configMapName" . }}
 {{- end }}
 {{- end }}
+{{- if .Values.secretDockerconfigjson.enabled }}
+imagePullSecrets:
+  - name: {{ include "universal.fullname" . }}-dockerconfigjson
+{{- end }}
 containers:
   - name: {{ include "universal.fullname" . }}
     image: "{{ .Values.app.image.name }}:{{ .Values.app.image.tag }}"

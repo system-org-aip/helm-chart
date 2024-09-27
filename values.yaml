@@ -29,8 +29,8 @@ app:
     tag: ""
     pullPolicy: Always
   serviceAccountName: ""
-  podSecurityContext: {}
-  securityContext: {}
+  podSecurityContext: {} # for pod level
+  securityContext: {} # for container level
   command: {}
   commandArgs: {}
   ports: {}
@@ -73,3 +73,9 @@ serviceAccount:
 
 secret: # argocd vault cmp + argocd image updater dont work
   enabled: false
+  type: ""
+  data: {}
+
+secretDockerconfigjson:
+  enabled: false
+  data: ""
