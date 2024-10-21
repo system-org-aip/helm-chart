@@ -69,7 +69,7 @@ serviceAccount:
   name: "" # if not set, the common name will be used
   labels: {}
   annotations: {}
-  automountServiceAccountToken: false
+  automountServiceAccountToken:
 
 secret: # argocd vault cmp + argocd image updater dont work
   enabled: false
