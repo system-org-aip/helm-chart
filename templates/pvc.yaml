@@ -1,0 +1,27 @@
+{{- if .Values.pvc.enabled -}}
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: {{ include "universal.pvcName" . }}
+  namespace: {{ include "universal.namespace" . }}
+  labels:
+    {{- include "universal.labels" . | nindent 4 }}
+    {{- with .Values.pvc.labels }}
+    {{- toYaml . | nindent 4 }}
+    {{- end }}
+  {{- with .Values.pvc.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+spec:
+  accessModes:
+    - {{ .Values.pvc.accessMode | default "ReadWriteOnce" }}
+  resources:
+    requests:
+      storage: {{ .Values.pvc.storageSize }}
+  {{- with .Values.pvc.storageClassName }}
+  storageClassName:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+{{- end }}

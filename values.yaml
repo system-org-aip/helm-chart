@@ -40,7 +40,7 @@ app:
   startupProbe: {}
   env: []
   envFrom: []
-  volumes: {}  # mount inside pod
+  volumes: {} # mount inside pod
   volumeMounts: {} # mount inside container
   volumeClaimTemplates: {} # if kind == "StatefulSet"
   extraContainer: {}
@@ -73,11 +73,19 @@ serviceAccount:
 
 secret: # argocd vault cmp + argocd image updater dont work
   enabled: false
-  name: ""
-  nameSuffix: ""
+  name: "" # if empty, will be used universl.fullname (opt. universl.fullname + .nameSuffix)
+  nameSuffix: "" # if empty, will be used universl.fullname or .name
   type: ""
   data: {}
 
 secretDockerconfigjson:
   enabled: false
   data: ""
+
+pvc:
+  enabled: false
+  name: "" # if empty, will be used universl.fullname (opt. universl.fullname + .nameSuffix)
+  nameSuffix: "" # if empty, will be used universl.fullname or .name
+  accessMode: "" # default ReadWtiteOnce
+  storageSize: ""
+  StorageClassName: ""

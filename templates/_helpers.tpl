@@ -105,3 +105,18 @@ Create the name of the secret
 {{- include "universal.fullname" $ }}
 {{- end }}
 {{- end }}
+
+{{/*
+Create the name of the pvc
+*/}}
+{{- define "universal.pvcName" -}}
+{{- if and .Values.pvc.name ( not .Values.pvc.nameSuffix ) }}
+{{- .Values.pvc.name }}
+{{- else if and .Values.pvc.name .Values.pvc.nameSuffix }}
+{{- printf "%s-%s" .Values.pvc.name .Values.pvc.nameSuffix }}
+{{- else if and ( not .Values.pvc.name ) .Values.pvc.nameSuffix }}
+{{- printf "%s-%s" ( include "universal.fullname" $ ) .Values.pvc.nameSuffix }}
+{{- else }}
+{{- include "universal.fullname" $ }}
+{{- end }}
+{{- end }}
