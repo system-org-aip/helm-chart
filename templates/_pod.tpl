@@ -132,6 +132,53 @@ containers:
       {{- toYaml . | nindent 6 }}
     {{- end }}
   {{- end }}
+  {{- if .Values.app.extraContainers.list  }}
+  {{- range .Values.app.extraContainers.list }}
+  - name: {{ .name }}
+    image: "{{if $.Values.app.extraContainers.image.name }}{{ $.Values.app.extraContainers.image.name }}{{ else }}{{ .image.name }}{{ if .image.tag }}:{{ .image.tag }}{{ end }}{{ end }}"
+    imagePullPolicy: {{ if $.Values.app.extraContainers.image.pullPolicy }}{{ $.Values.app.extraContainers.image.pullPolicy }}{{ end }}{{ .image.pullPolicy }}
+    {{- with .securityContext }}
+    securityContext:
+      {{- toYaml . | nindent 6 }}
+    {{- end }}
+    {{- with .command }}
+    command:
+      {{- toYaml . | nindent 6 }}
+    {{- end }}
+    {{- with .commandArgs }}
+    args:
+      {{- toYaml . | nindent 6 }}
+    {{- end }}
+    {{- with .ports }}
+    ports:
+      {{- toYaml . | nindent 6 }}
+    {{- end }}
+    {{- with .livenessProbe }}
+    livenessProbe:
+      {{- toYaml . | nindent 6 }}
+    {{- end }}
+    {{- with .readinessProbe }}
+    readinessProbe:
+      {{- toYaml . | nindent 6 }}
+    {{- end }}
+    {{- with .resources }}
+    resources:
+      {{- toYaml . | nindent 6 }}
+    {{- end }}
+    {{- with .env }}
+    env:
+      {{- toYaml . | nindent 6 }}
+    {{- end }}
+    {{- with .envFrom }}
+    envFrom:
+      {{- toYaml . | nindent 6 }}
+    {{- end }}
+    {{- with .volumeMounts }}
+    volumeMounts:
+      {{- toYaml . | nindent 6 }}
+    {{- end }}
+    {{- end }}
+  {{- end }}
   {{- range .Values.app.sidecarContainers }}
   - name: {{ .name }}
     image: "{{ .image.name }}{{ if .image.tag }}:{{ .image.tag }}{{ end }}"

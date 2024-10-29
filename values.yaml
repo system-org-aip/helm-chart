@@ -43,8 +43,14 @@ app:
   volumes: {} # mount inside pod
   volumeMounts: {} # mount inside container
   volumeClaimTemplates: {} # if kind == "StatefulSet"
-  extraContainer: {}
-  sidecarContainers: []
+  extraContainer: {} # for single extra container
+  extraContainersList: # for list of are containers
+    image: # if need yse common image for all containers
+      name: ""
+      tag: ""
+      pullPolicy: ""
+    list: []
+  sidecarContainers: [] # for list of are sidecars
 
 service:
   enabled: false
