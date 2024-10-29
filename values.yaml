@@ -49,6 +49,12 @@ app:
       name: ""
       tag: ""
       pullPolicy: ""
+    resources: {}
+    pvc:
+      enabled: false
+      accessMode: "" # default ReadWtiteOnce
+      storageSize: ""
+      StorageClassName: ""
     list: []
   sidecarContainers: [] # for list of are sidecars
 
