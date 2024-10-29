@@ -25,3 +25,32 @@ spec:
     {{- toYaml . | nindent 4 }}
   {{- end }}
 {{- end }}
+{{- if .Values.app.extraContainersList.pvc.enabled -}}
+{{- range .Values.app.extraContainersList.list -}}
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: "{{ include "universal.pvcName" $ }}-{{ .name }}"
+  namespace: {{ include "universal.namespace" $ }}
+  labels:
+    {{- include "universal.labels" . | nindent 4 }}
+    {{- with $.Values.app.extraContainersList.pvc.labels }}
+    {{- toYaml . | nindent 4 }}
+    {{- end }}
+  {{- with $.Values.app.extraContainersList.pvc.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+spec:
+  accessModes:
+    - {{ $.Values.app.extraContainersList.pvc.accessMode | default "ReadWriteOnce" }}
+  resources:
+    requests:
+      storage: {{ $.Values.app.extraContainersList.pvc.storageSize }}
+  {{- with $.Values.app.extraContainersList.pvc.storageClassName }}
+  storageClassName:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+{{- end }}
+{{- end }}
