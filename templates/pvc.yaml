@@ -34,7 +34,7 @@ metadata:
   name: "{{ include "universal.pvcName" $ }}-{{ .name }}"
   namespace: {{ include "universal.namespace" $ }}
   labels:
-    {{- include "universal.labels" . | nindent 4 }}
+    {{- include "universal.labels" $ | nindent 4 }}
     {{- with $.Values.app.extraContainersList.pvc.labels }}
     {{- toYaml . | nindent 4 }}
     {{- end }}
