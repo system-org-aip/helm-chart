@@ -135,7 +135,7 @@ containers:
   {{- if .Values.app.extraContainersList.list  }}
   {{- range .Values.app.extraContainersList.list }}
   - name: {{ .name }}
-    image: "{{if $.Values.app.extraContainersList.image.name }}{{ $.Values.app.extraContainers.image.name }}{{ else }}{{ .image.name }}{{ if .image.tag }}:{{ .image.tag }}{{ end }}{{ end }}"
+    image: "{{if $.Values.app.extraContainersList.image.name }}{{ $.Values.app.extraContainersList.image.name }}{{ else }}{{ .image.name }}{{ if .image.tag }}:{{ .image.tag }}{{ end }}{{ end }}"
     imagePullPolicy: {{ if $.Values.app.extraContainersList.image.pullPolicy }}{{ $.Values.app.extraContainersList.image.pullPolicy }}{{ end }}{{ .image.pullPolicy }}
     {{- with .securityContext }}
     securityContext:
@@ -161,10 +161,17 @@ containers:
     readinessProbe:
       {{- toYaml . | nindent 6 }}
     {{- end }}
+    {{- if $.Values.app.extraContainersList.resorces }}
+    {{- with $.Values.app.extraContainersList.resources }}
+    resources:
+      {{- toYaml . | nindent 6 }}
+    {{- end }}
+    {{- else }}
     {{- with .resources }}
     resources:
       {{- toYaml . | nindent 6 }}
     {{- end }}
+    {{- end  }}
     {{- with .env }}
     env:
       {{- toYaml . | nindent 6 }}
