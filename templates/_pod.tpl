@@ -161,7 +161,7 @@ containers:
     readinessProbe:
       {{- toYaml . | nindent 6 }}
     {{- end }}
-    {{- if $.Values.app.extraContainersList.resorces }}
+    {{- if $.Values.app.extraContainersList.resources }}
     {{- with $.Values.app.extraContainersList.resources }}
     resources:
       {{- toYaml . | nindent 6 }}
