@@ -132,11 +132,11 @@ containers:
       {{- toYaml . | nindent 6 }}
     {{- end }}
   {{- end }}
-  {{- if .Values.app.extraContainers.list  }}
-  {{- range .Values.app.extraContainers.list }}
+  {{- if .Values.app.extraContainersList.list  }}
+  {{- range .Values.app.extraContainersList.list }}
   - name: {{ .name }}
-    image: "{{if $.Values.app.extraContainers.image.name }}{{ $.Values.app.extraContainers.image.name }}{{ else }}{{ .image.name }}{{ if .image.tag }}:{{ .image.tag }}{{ end }}{{ end }}"
-    imagePullPolicy: {{ if $.Values.app.extraContainers.image.pullPolicy }}{{ $.Values.app.extraContainers.image.pullPolicy }}{{ end }}{{ .image.pullPolicy }}
+    image: "{{if $.Values.app.extraContainersList.image.name }}{{ $.Values.app.extraContainers.image.name }}{{ else }}{{ .image.name }}{{ if .image.tag }}:{{ .image.tag }}{{ end }}{{ end }}"
+    imagePullPolicy: {{ if $.Values.app.extraContainersList.image.pullPolicy }}{{ $.Values.app.extraContainersList.image.pullPolicy }}{{ end }}{{ .image.pullPolicy }}
     {{- with .securityContext }}
     securityContext:
       {{- toYaml . | nindent 6 }}
