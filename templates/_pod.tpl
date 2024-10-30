@@ -145,10 +145,17 @@ containers:
     command:
       {{- toYaml . | nindent 6 }}
     {{- end }}
-    {{- with .commandArgs }}
+    {{- if $.Values.app.extraContainersList.args }}
+    {{- with $.Values.app.extraContainersList.args }}
     args:
       {{- toYaml . | nindent 6 }}
     {{- end }}
+    {{- else }}
+    {{- with .args }}
+    args:
+      {{- toYaml . | nindent 6 }}
+    {{- end }}
+    {{- end  }}
     {{- with .ports }}
     ports:
       {{- toYaml . | nindent 6 }}
