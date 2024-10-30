@@ -50,6 +50,7 @@ app:
       tag: ""
       pullPolicy: ""
     resources: {}
+    args:
     pvc:
       enabled: false
       accessMode: "" # default ReadWtiteOnce
