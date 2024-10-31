@@ -31,7 +31,7 @@ spec:
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
-  name: "{{ include "universal.pvcName" $ }}-{{ .name }}"
+  name: "{{ .name }}"
   namespace: {{ include "universal.namespace" $ }}
   labels:
     {{- include "universal.labels" $ | nindent 4 }}
