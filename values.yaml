@@ -55,7 +55,7 @@ app:
       enabled: false
       accessMode: "" # default ReadWtiteOnce
       storageSize: ""
-      StorageClassName: ""
+      storageClassName: ""
     list: []
   sidecarContainers: [] # for list of are sidecars
 
