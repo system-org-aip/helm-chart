@@ -26,12 +26,12 @@ spec:
   {{- end }}
 {{- end }}
 {{- if .Values.app.extraContainersList.pvc.enabled -}}
-{{- range .Values.app.extraContainersList.list -}}
+{{- range $pvcList := .Values.app.extraContainersList.list -}}
 ---
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
-  name: "{{ .name }}"
+  name: {{ printf "%s-%s" (include "universal.pvcName" $) $pvcList.name }}
   namespace: {{ include "universal.namespace" $ }}
   labels:
     {{- include "universal.labels" $ | nindent 4 }}
