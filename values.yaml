@@ -8,7 +8,7 @@ app:
   kind: Deployment # StatefulSet or Deployment
   lebels: {}
   annotations: {}
-  replicas: 1
+  replicas: ""
   revisionHistoryLimit: 1 # if kind == "Deployment"
   strategy: {} # if kind == "Deployment"
   auth:
