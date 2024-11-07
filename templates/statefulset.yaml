@@ -15,7 +15,7 @@ metadata:
     {{- toYaml . | nindent 4 }}
   {{- end }}
 spec:
-  replicas:  {{ .Values.app.replicas | default .Values.app.replicaCount }}
+  replicas: {{ default .Values.app.replicas .Values.app.replicaCount }}
   selector:
     matchLabels:
       {{- include "universal.selectorLabels" . | nindent 6 }}
