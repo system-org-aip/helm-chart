@@ -29,7 +29,7 @@ app:
     tag: ""
     pullPolicy: Always
   serviceAccountName: ""
-  podSecurityContext: {} # for pod level
+  podSecurityContext: {} # for pod c1zRwgWhqVsaeK3Vlevel
   securityContext: {} # for container level
   command: []
   commandArgs: []
@@ -40,8 +40,8 @@ app:
   startupProbe: {}
   env: []
   envFrom: []
-  volumes: {} # mount inside pod
-  volumeMounts: {} # mount inside container
+  volumes: [] # mount inside pod
+  volumeMounts: [] # mount inside container
   volumeClaimTemplates: {} # if kind == "StatefulSet"
   extraContainer: {} # for single extra container
   extraContainersList: # for list of are containers

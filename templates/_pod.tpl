@@ -135,8 +135,8 @@ containers:
   {{- if .Values.app.extraContainersList.list  }}
   {{- range .Values.app.extraContainersList.list }}
   - name: {{ .name }}
-    image: "{{ default $.Values.app.extraContainersList.image.name .image.name }}:{{ default $.Values.app.extraContainersList.image.tag .image.tag }}"
-    imagePullPolicy: {{ default $.Values.app.extraContainersList.image.pullPolicy .image.pullPolicy }}
+    image: "{{ default .image.name $.Values.app.extraContainersList.image.name }}:{{ default .image.tag $.Values.app.extraContainersList.image.tag }}"
+    imagePullPolicy: {{ default .image.pullPolicy $.Values.app.extraContainersList.image.pullPolicy }}
     {{- with .securityContext }}
     securityContext:
       {{- toYaml . | nindent 6 }}
