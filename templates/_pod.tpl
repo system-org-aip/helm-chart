@@ -135,7 +135,7 @@ containers:
   {{- if .Values.app.extraContainersList.list  }}
   {{- range .Values.app.extraContainersList.list }}
   - name: {{ .name }}
-    image: "{{ default .image.name $.Values.app.extraContainersList.image.name }}:{{ default .image.tag $.Values.app.extraContainersList.image.tag }}"
+    image: "{{ dig "image" "name" $.Values.app.extraContainersList.image.name }}:{{ dig "image" "tag" $.Values.app.extraContainersList.image.tag }}"
     imagePullPolicy: {{ default .image.pullPolicy $.Values.app.extraContainersList.image.pullPolicy }}
     {{- with .securityContext }}
     securityContext:
