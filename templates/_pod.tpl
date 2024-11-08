@@ -141,17 +141,24 @@ containers:
     securityContext:
       {{- toYaml . | nindent 6 }}
     {{- end }}
+    {{- if $.Values.app.extraContainersList.command }}
+    {{- with $.Values.app.extraContainersList.command }}
+    command:
+      {{- toYaml . | nindent 6 }}
+    {{- end }}
+    {{- else }}
     {{- with .command }}
     command:
       {{- toYaml . | nindent 6 }}
     {{- end }}
-    {{- if $.Values.app.extraContainersList.args }}
-    {{- with $.Values.app.extraContainersList.args }}
+    {{- end  }}
+    {{- if $.Values.app.extraContainersList.commandArgs }}
+    {{- with $.Values.app.extraContainersList.commandArgs }}
     args:
       {{- toYaml . | nindent 6 }}
     {{- end }}
     {{- else }}
-    {{- with .args }}
+    {{- with .commandArgs }}
     args:
       {{- toYaml . | nindent 6 }}
     {{- end }}
