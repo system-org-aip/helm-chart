@@ -70,7 +70,7 @@ service:
       type: ClusterIP
       isHeadless: false
       ports: {}
-
+# test
 configmap:
   enabled: false
   name: "" # if empty, will be used universl.fullname (opt. universl.fullname + .nameSuffix)
