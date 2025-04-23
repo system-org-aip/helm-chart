@@ -15,6 +15,10 @@ tolerations:
 affinity:
   {{- toYaml . | nindent 2 }}
 {{- end }}
+{{- with .Values.app.nodeSelector }}
+nodeSelector:
+  {{- toYaml . | nindent 2 }}
+{{- end }}
 shareProcessNamespace: {{ .Values.app.shareProcessNamespace }}
 {{- if or .Values.app.auth.enabled .Values.app.volumes .Values.configmap.createVolume }}
 volumes:
