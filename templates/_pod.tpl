@@ -39,9 +39,14 @@ volumes:
       name: {{ include "universal.configMapName" . }}
 {{- end }}
 {{- end }}
-{{- if .Values.secretDockerconfigjson.enabled }}
+{{- if or (.Values.secretDockerconfigjson.enabled) (.Values.app.imagePullSecrets) }}
 imagePullSecrets:
+{{- if .Values.secretDockerconfigjson.enabled }}
   - name: {{ include "universal.fullname" . }}-dockerconfigjson
+{{- end }}
+{{- with .Values.app.imagePullSecrets }}
+  {{- toYaml . | nindent 2 }}
+{{- end }}
 {{- end }}
 containers:
   - name: {{ include "universal.fullname" . }}
