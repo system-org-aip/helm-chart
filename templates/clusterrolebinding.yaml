@@ -1,0 +1,18 @@
+{{- if .Values.serviceAccount.authDelegator }}
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  labels:
+    {{- include "universal.labels" . | nindent 4 }}
+  name: jwt-review-{{ include "universal.serviceAccountName" . }}
+  namespace: default
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: system:auth-delegator
+subjects:
+  - kind: ServiceAccount
+    name: {{ include "universal.serviceAccountName" . }}
+    namespace: {{ include "universal.namespace" . }}
+{{- end }}

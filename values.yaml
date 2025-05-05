@@ -82,6 +82,7 @@ configmap:
 serviceAccount:
   create: false
   name: "" # if not set, the common name will be used
+  authDelegator: false
   labels: {}
   annotations: {}
   automountServiceAccountToken:
