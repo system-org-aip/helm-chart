@@ -19,6 +19,9 @@ affinity:
 nodeSelector:
   {{- toYaml . | nindent 2 }}
 {{- end }}
+{{- if .Values.app.hostNetwork }}
+hostNetwork: true
+{{- end }}
 shareProcessNamespace: {{ .Values.app.shareProcessNamespace }}
 {{- if or .Values.app.auth.enabled .Values.app.volumes .Values.configmap.createVolume }}
 volumes:

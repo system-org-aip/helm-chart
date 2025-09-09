@@ -24,6 +24,7 @@ app:
   podAnnotations: {}
   affinity: {}
   nodeSelector: {}
+  hostNetwork: false
   shareProcessNamespace: ""
   image:
     name: ""
