@@ -248,6 +248,10 @@ containers:
     env:
       {{- toYaml . | nindent 6 }}
     {{- end }}
+    {{- with .lifecycle }}
+    lifecycle:
+      {{- toYaml . | nindent 6 }}
+    {{- end }}
     {{- with .envFrom }}
     envFrom:
       {{- toYaml . | nindent 6 }}
