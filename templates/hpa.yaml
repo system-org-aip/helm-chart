@@ -7,10 +7,10 @@ metadata:
   namespace: {{ include "universal.namespace" . }}
   labels:
     {{- include "universal.labels" . | nindent 4 }}
-    {{- with .Values.secret.labels }}
+    {{- with .Values.app.autoscaling.labels }}
     {{- toYaml . | nindent 4 }}
     {{- end }}
-  {{- with .Values.secret.annotations }}
+  {{- with .Values.app.autoscaling.annotations }}
   annotations:
     {{- toYaml . | nindent 4 }}
   {{- end }}
