@@ -36,8 +36,9 @@ spec:
         name: cpu
         target:
           type: Utilization
-          averageUtilization: {{ .Values.autoscaling.targetCPU }}
+          averageUtilization: {{ .Values.app.autoscaling.targetCPU }}
     {{- end }}
-  {{- if .Values.autoscaling.behavior }}
-  behavior: {{ toYaml .Values.autoscaling.behavior | nindent 4 }}
+  {{- if .Values.app.autoscaling.behavior }}
+  behavior: {{ toYaml .Values.app.autoscaling.behavior | nindent 4 }}
   {{- end }}
+{{- end }}
