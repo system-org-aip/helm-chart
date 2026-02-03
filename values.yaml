@@ -61,6 +61,8 @@ app:
       storageSize: ""
       storageClassName: ""
     list: []
+  autoscaling:
+    enabled: false
   sidecarContainers: [] # for list of are sidecars
 
 service:
