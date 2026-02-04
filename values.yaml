@@ -63,6 +63,10 @@ app:
     list: []
   autoscaling:
     enabled: false
+    minReplicas: 1
+    maxReplicas: 3
+    targetMemory: ""
+    targetCPU: ""
   sidecarContainers: [] # for list of are sidecars
 
 service:
