@@ -15,8 +15,8 @@ metadata:
     {{- toYaml . | nindent 4 }}
   {{- end }}
 spec:
-  {{- if .Values.app.replicaCount }}
-  replicas: {{ .Values.app.replicaCount }}
+  {{- if .Values.app.replicas }}
+  replicas: {{ .Values.app.replicas }}
   {{- end }}
   revisionHistoryLimit: {{ .Values.app.revisionHistoryLimit }}
   {{- with .Values.app.strategy }}
