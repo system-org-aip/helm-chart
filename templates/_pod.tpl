@@ -87,9 +87,39 @@ containers:
     resources:
       {{- toYaml . | nindent 6 }}
     {{- end }}
-    {{- with .Values.app.env }}
+    {{- if or .Values.app.env .Values.app.otel.enabled }}
     env:
-      {{- toYaml . | nindent 6 }}
+    {{- if .Values.app.env }}
+      {{- toYaml .Values.app.env | nindent 6 }}
+    {{- end }}
+    {{- if .Values.app.otel.enabled }}
+      - name: OTEL_TRACES_EXPORTER
+        value: "otlp"
+      - name: OTEL_LOGS_EXPORTER
+        value: "otlp"
+      - name: OTEL_METRICS_EXPORTER
+        value: "otlp"
+      - name: OTEL_EXPORTER_OTLP_PROTOCOL
+        value: "http/json"
+      - name: OTEL_EXPORTER_OTLP_ENDPOINT
+        value: {{ .Values.app.otel.exporter_url }}
+      - name: OTEL_EXPORTER_OTLP_TRACES_ENDPOINT
+        value: "$(OTEL_EXPORTER_OTLP_ENDPOINT)/v1/traces"
+      - name: OTEL_EXPORTER_OTLP_LOGS_ENDPOINT
+        value: "$(OTEL_EXPORTER_OTLP_ENDPOINT)/v1/logs"
+      - name: OTEL_EXPORTER_OTLP_METRICS_ENDPOINT
+        value: "$(OTEL_EXPORTER_OTLP_ENDPOINT)/v1/metrics"
+      - name: OTEL_TRACES_SAMPLER
+        value: "always_on"
+      - name: OTEL_LOGS_EXPORTER_OTLP_SPAN_CONTEXT
+        value: "true"
+      - name: OTEL_TRACES_EXPORTER_OTLP_SPAN_CONTEXT
+        value: "true"
+      - name: OTEL_NODE_RESOURCE_DETECTORS
+        value: "env,host,os,serviceinstance"
+      - name: OTEL_LOG_LEVEL
+        value: {{ .Values.app.otel.log_level }}
+    {{- end }}
     {{- end }}
     {{- with .Values.app.envFrom }}
     envFrom:

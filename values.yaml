@@ -8,7 +8,7 @@ app:
   kind: Deployment # StatefulSet or Deployment
   lebels: {}
   annotations: {}
-  replicas: 0
+  replicas: 1 # autoscaling.enable == true - set it to disabled
   revisionHistoryLimit: 1 # if kind == "Deployment"
   strategy: {} # if kind == "Deployment"
   auth:
@@ -20,6 +20,10 @@ app:
       memory: 50Mi
       cpu: 50m
     basicAuthSecret: {}
+  otel:
+    enabled: false
+    exporter_url: ""
+    log_level: info
   podLabels: {}
   podAnnotations: {}
   affinity: {}
@@ -61,6 +65,12 @@ app:
       storageSize: ""
       storageClassName: ""
     list: []
+  autoscaling:
+    enabled: false
+    minReplicas: 1
+    maxReplicas: 3
+    targetMemory: ""
+    targetCPU: ""
   sidecarContainers: [] # for list of are sidecars
 
 service:
