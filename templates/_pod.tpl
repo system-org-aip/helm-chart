@@ -87,7 +87,7 @@ containers:
     resources:
       {{- toYaml . | nindent 6 }}
     {{- end }}
-    {{- if and .Value.app.env .Values.app.otel.enabled }}
+    {{- if and .Values.app.env .Values.app.otel.enabled }}
     env:
     {{- with .Values.app.env }}
       {{- toYaml . | nindent 6 }}
