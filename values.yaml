@@ -22,7 +22,7 @@ app:
     basicAuthSecret: {}
   otel:
     enabled: false
-    exporter_endpoint: ""
+    exporter_url: ""
     log_level: info
   podLabels: {}
   podAnnotations: {}

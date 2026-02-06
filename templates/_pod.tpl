@@ -102,7 +102,7 @@ containers:
       - name: OTEL_EXPORTER_OTLP_PROTOCOL
         value: "http/json"
       - name: OTEL_EXPORTER_OTLP_ENDPOINT
-        value: {{ .Values.app.otel.exporter_endpoint }}
+        value: {{ .Values.app.otel.exporter_url }}
       - name: OTEL_EXPORTER_OTLP_TRACES_ENDPOINT
         value: "$(OTEL_EXPORTER_OTLP_ENDPOINT)/v1/traces"
       - name: OTEL_EXPORTER_OTLP_LOGS_ENDPOINT
