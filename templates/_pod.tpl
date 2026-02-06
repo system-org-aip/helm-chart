@@ -89,8 +89,8 @@ containers:
     {{- end }}
     {{- if or .Values.app.env .Values.app.otel.enabled }}
     env:
-    {{- with .Values.app.env }}
-      {{- toYaml . | nindent 6 }}
+    {{- if .Values.app.env }}
+      {{- toYaml .Values.app.env | nindent 6 }}
     {{- end }}
     {{- if .Values.app.otel.enabled }}
       - name: OTEL_TRACES_EXPORTER
