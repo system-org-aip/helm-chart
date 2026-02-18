@@ -1,35 +1,43 @@
-{{- if .Values.ingress.enabled }}
-{{- range .Values.ingress.list }}
+{{- if .Values.ingress.enabled -}}
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: {{ .name }}
-  namespace: {{ include "universal.namespace" $ }}
+  name: {{ include "universal.fullname" . }}
+  namespace: {{ include "universal.namespace" . }}
   labels:
-    {{- include "universal.labels" $ | nindent 4 }}
-  {{- with .annotations }}
+    {{- include "universal.labels" . | nindent 4 }}
+  {{- with .Values.ingress.annotations }}
   annotations:
     {{- toYaml . | nindent 4 }}
   {{- end }}
 spec:
+  {{- if .Values.ingress.className }}
+  ingressClassName: {{ .Values.ingress.className }}
+  {{- end }}
+  {{- if .Values.ingress.tls }}
+  tls:
+    {{- range .Values.ingress.tls }}
+    - hosts:
+        {{- range .hosts }}
+        - {{ . | quote }}
+        {{- end }}
+      secretName: {{ .secretName }}
+    {{- end }}
+  {{- end }}
   rules:
-    - host: {{ .hostname }}
+    {{- range .Values.ingress.hosts }}
+    - host: {{ .host | quote }}
       http:
         paths:
+          {{- range .paths }}
           - path: {{ .path }}
-            pathType: Prefix
+            pathType: {{ .pathType | default "Prefix" }}
             backend:
               service:
-                name: ssl-redirect
+                name: {{ .serviceName | default (include "universal.fullname" $) }}
                 port:
-                  name: use-annotation
-          - path: {{ .path }}
-            pathType: Prefix
-            backend:
-              service:
-                name: {{ include "universal.fullname" $ }}
-                port:
-                  number: {{ .service_port }}
-{{- end }}
+                  number: {{ .servicePort | default $.Values.service.port }}
+          {{- end }}
+    {{- end }}
 {{- end }}

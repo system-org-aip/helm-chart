@@ -120,9 +120,7 @@ pvc:
 
 ingress:
   enabled: false
-  list:
-    - name: ""
-      annotations: {}
-      path: ""
-      hostname: ""
-      service_port: ""
+  annotations: {}
+  className: ""
+  hosts: {}
+  tls: {}
