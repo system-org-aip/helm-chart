@@ -37,7 +37,7 @@ spec:
               service:
                 name: {{ .serviceName | default (include "universal.fullname" $) }}
                 port:
-                  number: {{ .servicePort | default $.Values.service.port }}
+                  number: {{ .servicePort }}
           {{- end }}
     {{- end }}
 {{- end }}
