@@ -17,10 +17,8 @@ app:
     nginxVer: 1.27.1
     nginxProxyPassPort: ""
     nginxListenPort: 80
-    resources:
-      memory: 50Mi
-      cpu: 50m
-    basicAuthSecret: {}
+    resources: { memory: 50Mi, cpu: 50m }
+    basicAuthSecret: ""
   otel:
     enabled: false
     exporter_url: ""
