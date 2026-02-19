@@ -120,3 +120,47 @@ Create the name of the pvc
 {{- include "universal.fullname" $ }}
 {{- end }}
 {{- end }}
+
+{{/*
+Create probes
+*/}}
+{{- define "universal.probe" -}}
+{{- $context := index . 0 -}} {{/* Global context ($) */}}
+{{- $probe := index . 1 -}}   {{/* Probes context */}}
+{{- if or $probe.path $probe.tcpPort $probe.grpcPort $probe.command $probe.custom }}
+{{- if $probe.custom }}
+{{- toYaml $probe.custom | nindent 2 }}
+{{- else }}
+{{- if $probe.path }}
+httpGet:
+  path: {{ $probe.path }}
+  port: {{ $probe.port | default $context.Values.app.commonPort | default 8000 }}
+  scheme: {{ $probe.scheme | default "HTTP" }}
+{{- else if $probe.tcpPort }}
+tcpSocket:
+  port: {{ $probe.tcpPort | default $context.Values.app.commonPort | default 8000 }}
+{{- else if $probe.grpcPort }}
+grpc:
+  port: {{ $probe.grpcPort | default $context.Values.app.commonPort | default 8000 }}
+{{- else if $probe.command }}
+exec:
+  command: {{ toYaml $probe.command | nindent 4 }}
+{{- end }}
+{{- with $probe.initialDelaySeconds }}
+initialDelaySeconds: {{ . }}
+{{- end }}
+{{- with $probe.periodSeconds }}
+periodSeconds: {{ . }}
+{{- end }}
+{{- with $probe.timeoutSeconds }}
+timeoutSeconds: {{ . }}
+{{- end }}
+{{- with $probe.successThreshold }}
+successThreshold: {{ . }}
+{{- end }}
+{{- with $probe.failureThreshold }}
+failureThreshold: {{ . }}
+{{- end }}
+{{- end }}
+{{- end }}
+{{- end -}}

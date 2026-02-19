@@ -11,10 +11,11 @@ app:
   replicas: 1 # autoscaling.enable == true - set it to disabled
   revisionHistoryLimit: 1 # if kind == "Deployment"
   strategy: {} # if kind == "Deployment"
+  port: ""
   auth:
     enabled: false
     nginxVer: 1.27.1
-    nginxProxyPassPort: 3000
+    nginxProxyPassPort: ""
     nginxListenPort: 80
     resources:
       memory: 50Mi
@@ -120,7 +121,9 @@ pvc:
 
 ingress:
   enabled: false
-  annotations: {}
-  className: ""
-  hosts: {}
-  tls: {}
+  list:
+    - name: "" # if empty, will be used universl.fullname (opt. universl.fullname + .name_suffix)
+      annotations: "" # if emty, will be used universl.fullname or .name
+      className: ""
+      hosts: {}
+      tls: {}

@@ -67,22 +67,21 @@ containers:
     args:
       {{- toYaml . | nindent 6 }}
     {{- end }}
-    {{- with .Values.app.ports }}
     ports:
-      {{- toYaml . | nindent 6 }}
+    {{- if .Values.app.commonPort }}
+      - name: http
+        containerPort: {{ .Values.app.commonPort }}
+        protocol: TCP
     {{- end }}
-    {{- with .Values.app.livenessProbe }}
+    {{- if .Values.app.ports }}
+      {{- toYaml .Values.app.ports | nindent 6 }}
+    {{- end }}
     livenessProbe:
-      {{- toYaml . | nindent 6 }}
-    {{- end }}
-    {{- with .Values.app.readinessProbe }}
+      {{- include "universal.probe" (list $ .Values.app.livenessProbe) | nindent 10 }}
     readinessProbe:
-      {{- toYaml . | nindent 6 }}
-    {{- end }}
-    {{- with .Values.app.startupProbe }}
+      {{- include "universal.probe" (list $ .Values.app.readinessProbe) | nindent 10 }}
     startupProbe:
-      {{- toYaml . | nindent 6 }}
-    {{- end }}
+      {{- include "universal.probe" (list $ .Values.app.startupProbe) | nindent 10 }}
     {{- with .Values.app.resources }}
     resources:
       {{- toYaml . | nindent 6 }}
@@ -91,6 +90,10 @@ containers:
     env:
     {{- if .Values.app.env }}
       {{- toYaml .Values.app.env | nindent 6 }}
+    {{- end }}
+    {{- if .Values.app.commonPort }}
+      - name: PORT
+        value: {{ .Values.app.commonPort | quote }}
     {{- end }}
     {{- if .Values.app.otel.enabled }}
       - name: OTEL_TRACES_EXPORTER

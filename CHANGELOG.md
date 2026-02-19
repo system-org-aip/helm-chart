@@ -1,6 +1,10 @@
 # Changelog
 All notable changes to this chart will be documented in this file.
 
+## [1.3.1] - 2026-02-18
+- логика использование общего .app.commonPort;
+- логика универсальноя части с пробами.
+
 ## [1.3.0] - 2026-02-18
 - доработка ingress.
 

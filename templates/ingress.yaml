@@ -1,23 +1,27 @@
 {{- if .Values.ingress.enabled -}}
+{{- range .Values.ingress.list }}
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: {{ include "universal.fullname" . }}
-  namespace: {{ include "universal.namespace" . }}
+  name: {{ if and .name ( not .nameSuffix ) }}{{ .name }}{{ else if and .name .nameSuffix }}{{ printf "%s-%s" .name .nameSuffix }}{{ else if and ( not .name ) .nameSuffix }}{{ printf "%s-%s" ( include "universal.fullname" $ ) .nameSuffix }}{{ else }}{{ include "universal.fullname" $ }}{{ end }}
+  namespace: {{ include "universal.namespace" $ }}
   labels:
-    {{- include "universal.labels" . | nindent 4 }}
-  {{- with .Values.ingress.annotations }}
+    {{- include "universal.labels" $ | nindent 4 }}
   annotations:
-    {{- toYaml . | nindent 4 }}
-  {{- end }}
+    {{- if .annotations }}
+    {{- toYaml .annotations | nindent 4 }}
+    {{- else }}
+    {{- toYaml $.Values.ingress.annotations | nindent 4 }}
+    {{- end }}
 spec:
-  {{- if .Values.ingress.className }}
-  ingressClassName: {{ .Values.ingress.className }}
+  {{- $className := .className | default $.Values.ingress.className }}
+  {{- if $className }}
+  ingressClassName: {{ $className }}
   {{- end }}
-  {{- if .Values.ingress.tls }}
+  {{- if .tls }}
   tls:
-    {{- range .Values.ingress.tls }}
+    {{- range .tls }}
     - hosts:
         {{- range .hosts }}
         - {{ . | quote }}
@@ -26,7 +30,7 @@ spec:
     {{- end }}
   {{- end }}
   rules:
-    {{- range .Values.ingress.hosts }}
+    {{- range .hosts }}
     - host: {{ .host | quote }}
       http:
         paths:
@@ -37,7 +41,8 @@ spec:
               service:
                 name: {{ .serviceName | default (include "universal.fullname" $) }}
                 port:
-                  number: {{ .servicePort }}
+                  number: {{ .servicePort | default $.Values.app.commonPort }}
           {{- end }}
     {{- end }}
+{{- end }}
 {{- end }}
