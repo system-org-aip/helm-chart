@@ -35,7 +35,7 @@ spec:
       http:
         paths:
           {{- $paths := .paths | default (list (dict "path" "/")) -}}
-          {{- range .paths }}
+          {{- range $paths }}
           - path: {{ .path }}
             pathType: {{ .pathType | default "Prefix" }}
             backend:
