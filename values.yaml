@@ -73,7 +73,7 @@ app:
   sidecarContainers: [] # for list of are sidecars
 
 service:
-  enabled: false
+  enabled: true
   list:
     - name: "" # if empty, will be used universl.fullname (opt. universl.fullname + .name_suffix)
       nameSuffix: "" # if emty, will be used universl.fullname or .name
