@@ -61,6 +61,9 @@ spec:
       {{- end }}
       {{- end }}
     {{- else }}
+    {{- if not $.Values.app.commonPort -}}
+      {{- fail (printf "\n[ERROR] Service validation failed: 'service.port' is missing and '.app.commonPort' is not defined.") -}}
+    {{- end -}}
     - port: {{ $.Values.app.commonPort | int }}
       targetPort: {{ $.Values.app.commonPort | int }}
       protocol: TCP

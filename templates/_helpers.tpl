@@ -131,7 +131,7 @@ Create probes
 {{- if $probe.custom -}}
 {{- toYaml $probe.custom | nindent 2 }}
 {{- else }}
-{{- if $probe.path -}}
+{{- if and $probe.path (or $probe.port $context.Values.app.commonPort) -}}
 httpGet:
   path: {{ $probe.path }}
   port: {{ $probe.port | default $context.Values.app.commonPort }}

@@ -67,6 +67,7 @@ containers:
     args:
       {{- toYaml . | nindent 6 }}
     {{- end }}
+    {{- if or .Values.app.commonPort .Values.app.ports }}
     ports:
     {{- if .Values.app.commonPort }}
       - name: http
@@ -75,6 +76,7 @@ containers:
     {{- end }}
     {{- if .Values.app.ports }}
       {{- toYaml .Values.app.ports | nindent 6 }}
+    {{- end }}
     {{- end }}
     {{- if .Values.app.livenessProbe }}
     livenessProbe:

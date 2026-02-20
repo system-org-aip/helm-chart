@@ -36,6 +36,10 @@ spec:
         paths:
           {{- $paths := .paths | default (list (dict "path" "/")) -}}
           {{- range $paths }}
+          {{- $port := .servicePort | default $.Values.app.commonPort -}}
+          {{- if not $port -}}
+            {{- fail (printf "\n[ERROR] Ingress validation failed for host %s: 'ingress.hosts.paths.port' is missing and '.app.commonPort' is not defined." .host) -}}
+          {{- end -}}
           - path: {{ .path }}
             pathType: {{ .pathType | default "Prefix" }}
             backend:
