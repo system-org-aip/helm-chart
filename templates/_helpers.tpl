@@ -134,14 +134,14 @@ Create probes
 {{- if $probe.path }}
 httpGet:
   path: {{ $probe.path }}
-  port: {{ $probe.port | default $context.Values.app.commonPort | default 8000 }}
+  port: {{ $probe.port | default $context.Values.app.commonPort }}
   scheme: {{ $probe.scheme | default "HTTP" }}
 {{- else if $probe.tcpPort }}
 tcpSocket:
-  port: {{ $probe.tcpPort | default $context.Values.app.commonPort | default 8000 }}
+  port: {{ $probe.tcpPort | default $context.Values.app.commonPort }}
 {{- else if $probe.grpcPort }}
 grpc:
-  port: {{ $probe.grpcPort | default $context.Values.app.commonPort | default 8000 }}
+  port: {{ $probe.grpcPort | default $context.Values.app.commonPort }}
 {{- else if $probe.command }}
 exec:
   command: {{ toYaml $probe.command | nindent 4 }}
