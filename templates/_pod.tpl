@@ -76,12 +76,18 @@ containers:
     {{- if .Values.app.ports }}
       {{- toYaml .Values.app.ports | nindent 6 }}
     {{- end }}
+    {{- if .Values.app.livenessProbe }}
     livenessProbe:
       {{- include "universal.probe" (list $ .Values.app.livenessProbe) | nindent 6 }}
+    {{- end }}
+    {{- if .Values.app.readinessProbe }}
     readinessProbe:
       {{- include "universal.probe" (list $ .Values.app.readinessProbe) | nindent 6 }}
+    {{- end }}
+    {{- if .Values.app.startupProbe }}
     startupProbe:
       {{- include "universal.probe" (list $ .Values.app.startupProbe) | nindent 6 }}
+    {{- end }}
     {{- with .Values.app.resources }}
     resources:
       {{- toYaml . | nindent 6 }}

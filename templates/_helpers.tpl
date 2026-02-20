@@ -126,23 +126,23 @@ Create probes
 */}}
 {{- define "universal.probe" -}}
 {{- $context := index . 0 -}} {{/* Global context ($) */}}
-{{- $probe := index . 1 -}}   {{/* Probes context */}}
+{{- $probe := index . 1 -}} {{/* Probes context */}}
 {{- if or $probe.path $probe.tcpPort $probe.grpcPort $probe.command $probe.custom }}
-{{- if $probe.custom }}
+{{- if $probe.custom -}}
 {{- toYaml $probe.custom | nindent 2 }}
 {{- else }}
-{{- if $probe.path }}
+{{- if $probe.path -}}
 httpGet:
   path: {{ $probe.path }}
   port: {{ $probe.port | default $context.Values.app.commonPort }}
   scheme: {{ $probe.scheme | default "HTTP" }}
-{{- else if $probe.tcpPort }}
+{{- else if $probe.tcpPort -}}
 tcpSocket:
   port: {{ $probe.tcpPort | default $context.Values.app.commonPort }}
-{{- else if $probe.grpcPort }}
+{{- else if $probe.grpcPort -}}
 grpc:
   port: {{ $probe.grpcPort | default $context.Values.app.commonPort }}
-{{- else if $probe.command }}
+{{- else if $probe.command -}}
 exec:
   command: {{ toYaml $probe.command | nindent 4 }}
 {{- end }}
