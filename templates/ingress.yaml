@@ -44,7 +44,7 @@ spec:
           {{- if not $port -}}
             {{- fail (printf "\n[ERROR] Ingress validation failed for host %s: 'ingress.hosts.paths.port' is missing and '.app.commonPort' is not defined." $hostName) -}}
           {{- end }}
-          - path: {{ .path }}
+          - path: {{ .path | default "/" }}
             pathType: {{ .pathType | default "Prefix" }}
             backend:
               service:
