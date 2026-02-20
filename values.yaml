@@ -14,7 +14,7 @@ app:
   port: ""
   auth:
     enabled: false
-    nginxVer: 1.27.1
+    nginxVer: 1.28.2
     nginxProxyPassPort: ""
     nginxListenPort: 88
     resources: { memory: 50Mi, cpu: 50m }
