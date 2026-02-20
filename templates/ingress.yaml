@@ -16,6 +16,9 @@ metadata:
     {{- end }}
 spec:
   {{- $className := .className | default $.Values.ingress.className }}
+  {{- if not $className -}}
+    {{- fail (printf "\n[ERROR] Ingress validation failed: 'ingress.className' is missing") -}}
+  {{- end }}
   {{- if $className }}
   ingressClassName: {{ $className }}
   {{- end }}
@@ -31,22 +34,23 @@ spec:
   {{- end }}
   rules:
     {{- range .hosts }}
-    - host: {{ .host | quote }}
+    {{- $hostName := .host }}
+    - host: {{ $hostName | quote }}
       http:
         paths:
-          {{- $paths := .paths | default (list (dict "path" "/")) -}}
+          {{- $paths := .paths | default (list (dict "path" "/")) }}
           {{- range $paths }}
           {{- $port := .servicePort | default $.Values.app.commonPort -}}
           {{- if not $port -}}
-            {{- fail (printf "\n[ERROR] Ingress validation failed for host %s: 'ingress.hosts.paths.port' is missing and '.app.commonPort' is not defined." .host) -}}
-          {{- end -}}
+            {{- fail (printf "\n[ERROR] Ingress validation failed for host %s: 'ingress.hosts.paths.port' is missing and '.app.commonPort' is not defined." $hostName) -}}
+          {{- end }}
           - path: {{ .path }}
             pathType: {{ .pathType | default "Prefix" }}
             backend:
               service:
                 name: {{ .serviceName | default (include "universal.fullname" $) }}
                 port:
-                  number: {{ .servicePort | default $.Values.app.commonPort }}
+                  number: {{ $port }}
           {{- end }}
     {{- end }}
 {{- end }}
