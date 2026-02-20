@@ -8,7 +8,7 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: {{ if and .name ( not .nameSuffix ) }}{{ .name }}{{ else if and .name .nameSuffix }}{{ printf "%s-%s" .name .nameSuffix }}{{ else if and ( not .name ) .nameSuffix }}{{ printf "%s-%s" ( include "universal.fullname" $ ) .nameSuffix }}{{ else }}{{ print "%s-%s" ( include "universal.fullname" $ ) .className }}{{ end }}
+  name: {{ if and .name ( not .nameSuffix ) }}{{ .name }}{{ else if and .name .nameSuffix }}{{ printf "%s-%s" .name .nameSuffix }}{{ else if and ( not .name ) .nameSuffix }}{{ printf "%s-%s" ( include "universal.fullname" $ ) .nameSuffix }}{{ else }}{{ printf "%s-%s" ( include "universal.fullname" $ ) .className }}{{ end }}
   namespace: {{ include "universal.namespace" $ }}
   labels:
     {{- include "universal.labels" $ | nindent 4 }}
