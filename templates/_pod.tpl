@@ -86,12 +86,12 @@ containers:
     resources:
       {{- toYaml . | nindent 6 }}
     {{- end }}
-    {{- if or .Values.app.env .Values.app.otel.enabled }}
+    {{- if or .Values.app.env .Values.app.otel.enabled .Values.app.commonPort }}
     env:
     {{- if .Values.app.env }}
       {{- toYaml .Values.app.env | nindent 6 }}
     {{- end }}
-    {{- if not (empty .Values.app.commonPort) }}
+    {{- if .Values.app.commonPort }}
       - name: PORT
         value: {{ .Values.app.commonPort | quote }}
     {{- end }}
