@@ -91,7 +91,7 @@ containers:
     {{- if .Values.app.env }}
       {{- toYaml .Values.app.env | nindent 6 }}
     {{- end }}
-    {{- if .Values.app.commonPort }}
+    {{- if not (empty .Values.app.commonPort) }}
       - name: PORT
         value: {{ .Values.app.commonPort | quote }}
     {{- end }}
