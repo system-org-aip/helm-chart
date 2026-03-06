@@ -35,7 +35,7 @@ app:
     pullPolicy: IfNotPresent
   imagePullSecrets: []
   serviceAccountName: ""
-  podSecurityContext: {} # for pod c1zRwgWhqVsaeK3Vlevel
+  podSecurityContext: {} # for pod level
   securityContext: {} # for container level
   command: []
   commandArgs: []
