@@ -1,6 +1,9 @@
 # Changelog
 All notable changes to this chart will be documented in this file.
 
+## [1.3.2] - 2026-03-23
+- уникальное имя для crb.
+
 ## [1.3.1] - 2026-02-18
 - логика использование общего .app.commonPort;
 - логика универсальноя части с пробами.
