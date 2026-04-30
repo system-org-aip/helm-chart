@@ -51,6 +51,10 @@ imagePullSecrets:
   {{- toYaml . | nindent 2 }}
 {{- end }}
 {{- end }}
+{{- with .Values.app.initContainers }}
+initContainers:
+  {{- toYaml . | nindent 2 }}
+{{- end }}
 containers:
   - name: {{ include "universal.fullname" . }}
     image: "{{ .Values.app.image.name }}{{ if .Values.app.image.tag }}:{{ .Values.app.image.tag }}{{ end }}"
