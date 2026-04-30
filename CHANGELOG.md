@@ -1,6 +1,9 @@
 # Changelog
 All notable changes to this chart will be documented in this file.
 
+## [1.4.1] - 2026-04-30
+- добавление дополнительной логики для initContainers.
+
 ## [1.4.0] - 2026-04-30
 - добавление initContainers.
 
