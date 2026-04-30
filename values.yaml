@@ -71,6 +71,7 @@ app:
     targetMemory: ""
     targetCPU: ""
   sidecarContainers: [] # for list of are sidecars
+  initContainers: [] # for list of are init
 
 service:
   enabled: true
