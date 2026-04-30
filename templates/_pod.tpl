@@ -53,7 +53,48 @@ imagePullSecrets:
 {{- end }}
 {{- with .Values.app.initContainers }}
 initContainers:
-  {{- toYaml . | nindent 2 }}
+  {{- range . }}
+  - name: {{ .name }}
+    {{- /* Логика: если .image задан, берем его, если нет — собираем из основного контейнера */}}
+    {{- if .image }}
+    image: "{{ .image }}{{ if .tag }}:{{ .tag }}{{ end }}"
+    {{- else }}
+    image: "{{ $.Values.app.image.name }}{{ if $.Values.app.image.tag }}:{{ $.Values.app.image.tag }}{{ end }}"
+    {{- end }}
+    {{- if .imagePullPolicy }}
+    imagePullPolicy: {{ .imagePullPolicy }}
+    {{- else }}
+    imagePullPolicy: {{ $.Values.app.image.pullPolicy | default "IfNotPresent" }}
+    {{- end }}
+    {{- with .command }}
+    command:
+      {{- toYaml . | nindent 6 }}
+    {{- end }}
+    {{- with .args }}
+    args:
+      {{- toYaml . | nindent 6 }}
+    {{- end }}
+    {{- with .securityContext }}
+    securityContext:
+      {{- toYaml . | nindent 6 }}
+    {{- end }}
+    {{- with .env }}
+    env:
+      {{- toYaml . | nindent 6 }}
+    {{- end }}
+    {{- with .envFrom }}
+    envFrom:
+      {{- toYaml . | nindent 6 }}
+    {{- end }}
+    {{- with .volumeMounts }}
+    volumeMounts:
+      {{- toYaml . | nindent 6 }}
+    {{- end }}
+    {{- with .resources }}
+    resources:
+      {{- toYaml . | nindent 6 }}
+    {{- end }}
+  {{- end }}
 {{- end }}
 containers:
   - name: {{ include "universal.fullname" . }}
