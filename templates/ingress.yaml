@@ -12,6 +12,11 @@ metadata:
   namespace: {{ include "universal.namespace" $ }}
   labels:
     {{- include "universal.labels" $ | nindent 4 }}
+    {{- if .labels }}
+    {{- toYaml .labels | nindent 4 }}
+    {{- else if $.Values.ingress.labels }}
+    {{- toYaml $.Values.ingress.labels | nindent 4 }}
+    {{- end }}
   annotations:
     {{- if .annotations }}
     {{- toYaml .annotations | nindent 4 }}

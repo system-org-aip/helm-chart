@@ -122,7 +122,8 @@ ingress:
   enabled: false
   list:
     - name: "" # if empty, will be used universl.fullname (opt. universl.fullname + .name_suffix)
-      annotations: "" # if emty, will be used universl.fullname or .name
+      annotations: {}
+      labels: {}
       className: ""
       hosts: {}
       tls: {}
