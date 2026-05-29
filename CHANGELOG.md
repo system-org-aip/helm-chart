@@ -1,6 +1,12 @@
 # Changelog
 All notable changes to this chart will be documented in this file.
 
+## [1.4.2] - 2026-05-29
+- добавление labels для ingress.
+
+## [1.4.1] - 2026-04-30
+- добавление дополнительной логики для initContainers.
+
 ## [1.4.1] - 2026-04-30
 - добавление дополнительной логики для initContainers.
 
