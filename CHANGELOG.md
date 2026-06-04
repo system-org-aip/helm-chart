@@ -1,6 +1,9 @@
 # Changelog
 All notable changes to this chart will be documented in this file.
 
+## [1.5.1] - 2026-06-04
+- добавлен ingressroute + рефактор values для ingress.
+
 ## [1.4.3] - 2026-06-02
 - исправление кол-ва реплик при значении 0.
 

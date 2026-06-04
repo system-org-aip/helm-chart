@@ -120,10 +120,49 @@ pvc:
 
 ingress:
   enabled: false
-  list:
-    - name: "" # if empty, will be used universl.fullname (opt. universl.fullname + .name_suffix)
-      annotations: {}
-      labels: {}
-      className: ""
-      hosts: {}
-      tls: {}
+  # className: "nginx" # Глобальный класс, если не указан внутри конкретного ingress
+  # labels:
+  #   environment: production
+  #   managed-by: helm
+  # annotations:
+  #   kubernetes.io/ingress.class: "nginx"
+  # list:
+  #   - name: "main-website" # Будет использовано строго это имя (условие: if and .name (not .nameSuffix))
+  #     labels:
+  #       app.kubernetes.io/part-of: "frontend" # Переопределит глобальные .Values.ingress.labels
+  #     hosts:
+  #       - host: "example.com"
+  #         paths:
+  #           - path: "/"
+  #             pathType: "Prefix"
+  #             serviceName: "frontend-svc"
+  #             servicePort: 80 # Явно указанный порт
+  #           - path: "/static"
+  #             pathType: "ImplementationSpecific"
+  #             serviceName: "storage-svc"
+  #             servicePort: 8080
+  #     tls:
+  #       - secretName: "example-com-tls"
+  #         hosts:
+  #           - "example.com"инининининининининининининин
+
+ingressRoute:
+  enabled: false
+  # entryPoints:
+  #   - web
+  #   - websecure
+  # labels: {}
+  # annotations: {}
+  # list:
+  #   - nameSuffix: "main"
+  #     hosts:
+  #       - host: example.com
+  #         paths:
+  #           - path: /api
+  #             servicePort: 3000
+  #             # Можно вешать middleware Traefik прямо на конкретный путь
+  #             middlewares:
+  #               - name: strip-prefix
+  #           - path: /
+  #     tls:
+  #       secretName: example-com-tls

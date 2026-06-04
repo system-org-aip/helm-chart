@@ -1,0 +1,60 @@
+{{- if .Values.ingressRoute.enabled -}}
+{{- range .Values.ingressRoute.list }}
+---
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: {{ if and .name ( not .nameSuffix ) }}{{ .name }}{{ else if and .name .nameSuffix }}{{ printf "%s-%s" .name .nameSuffix }}{{ else if and ( not .name ) .nameSuffix }}{{ printf "%s-%s" ( include "universal.fullname" $ ) .nameSuffix }}{{ else }}{{ printf "%s-%s" ( include "universal.fullname" $ ) (.entryPoints | first | default "web") }}{{ end }}
+  namespace: {{ include "universal.namespace" $ }}
+  labels:
+    {{- include "universal.labels" $ | nindent 4 }}
+    {{- if .labels }}
+    {{- toYaml .labels | nindent 4 }}
+    {{- else if $.Values.ingressRoute.labels }}
+    {{- toYaml $.Values.ingressRoute.labels | nindent 4 }}
+    {{- end }}
+  annotations:
+    {{- if .annotations }}
+    {{- toYaml .annotations | nindent 4 }}
+    {{- else }}
+    {{- toYaml $.Values.ingressRoute.annotations | nindent 4 }}
+    {{- end }}
+spec:
+  {{- $entryPoints := .entryPoints | default $.Values.ingressRoute.entryPoints }}
+  {{- if $entryPoints }}
+  entryPoints:
+    {{- toYaml $entryPoints | nindent 4 }}
+  {{- end }}
+  routes:
+    {{- range .hosts }}
+    {{- $hostName := .host }}
+    {{- $paths := .paths | default (list (dict "path" "/")) }}
+    {{- range $paths }}
+    {{- $port := .servicePort | default $.Values.app.commonPort -}}
+    {{- if not $port -}}
+      {{- fail (printf "\n[ERROR] IngressRoute validation failed for host %s: 'ingressRoute.hosts.paths.port' is missing and '.app.commonPort' is not defined." $hostName) -}}
+    {{- end }}
+    - match: {{ printf "Host(`%s`) && PathPrefix(`%s`)" $hostName (.path | default "/") }}
+      kind: Rule
+      {{- if .middlewares }}
+      middlewares:
+        {{- toYaml .middlewares | nindent 8 }}
+      {{- end }}
+      services:
+        - name: {{ .serviceName | default (include "universal.fullname" $) }}
+          port: {{ $port }}
+    {{- end }}
+    {{- end }}
+  {{- if .tls }}
+  tls:
+    {{- if .tls.secretName }}
+    secretName: {{ .tls.secretName }}
+    {{- end }}
+    {{- if .tls.options }}
+    options:
+      name: {{ .tls.options.name }}
+      namespace: {{ .tls.options.namespace | default (include "universal.namespace" $) }}
+    {{- end }}
+  {{- end }}
+{{- end }}
+{{- end }}
