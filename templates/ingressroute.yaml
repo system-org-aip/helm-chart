@@ -42,6 +42,7 @@ spec:
       {{- end }}
       services:
         - name: {{ .serviceName | default (include "universal.fullname" $) }}
+          namespace: {{ .serviceNamespace | default (include "universal.namespace" $) }}
           port: {{ $port }}
     {{- end }}
     {{- end }}
