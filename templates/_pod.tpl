@@ -1,5 +1,18 @@
 {{- define "universal.pod" -}}
 serviceAccountName: {{ .Values.app.serviceAccountName | default (include "universal.serviceAccountName" .) }}
+{{- /* Optional pod fields: rendered only when set explicitly, otherwise Kubernetes defaults apply. */}}
+{{- if kindIs "bool" .Values.app.automountServiceAccountToken }}
+automountServiceAccountToken: {{ .Values.app.automountServiceAccountToken }}
+{{- end }}
+{{- if kindIs "bool" .Values.app.enableServiceLinks }}
+enableServiceLinks: {{ .Values.app.enableServiceLinks }}
+{{- end }}
+{{- with .Values.app.runtimeClassName }}
+runtimeClassName: {{ . | quote }}
+{{- end }}
+{{- if not (kindIs "invalid" .Values.app.terminationGracePeriodSeconds) }}
+terminationGracePeriodSeconds: {{ .Values.app.terminationGracePeriodSeconds }}
+{{- end }}
 {{- with .Values.app.podSecurityContext }}
 securityContext:
   {{- toYaml . | nindent 2 }}
@@ -179,6 +192,10 @@ containers:
     {{- end }}
     {{- with .Values.app.envFrom }}
     envFrom:
+      {{- toYaml . | nindent 6 }}
+    {{- end }}
+    {{- with .Values.app.lifecycle }}
+    lifecycle:
       {{- toYaml . | nindent 6 }}
     {{- end }}
     {{- with .Values.app.volumeMounts }}

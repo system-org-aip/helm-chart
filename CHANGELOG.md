@@ -1,6 +1,13 @@
 # Changelog
 All notable changes to this chart will be documented in this file.
 
+## [1.6.0] - 2026-11-02
+- app: runtimeClassName, automountServiceAccountToken, enableServiceLinks, terminationGracePeriodSeconds (рендерятся только если заданы).
+- app.lifecycle для основного контейнера.
+- app.updateStrategy для StatefulSet.
+- extraObjects для произвольных манифестов.
+- fix: serviceAccount.automountServiceAccountToken: false больше не превращается в true.
+
 ## [1.5.1] - 2026-06-04
 - добавлен ingressroute + рефактор values для ingress.
 

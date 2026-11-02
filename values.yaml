@@ -35,6 +35,12 @@ app:
     pullPolicy: IfNotPresent
   imagePullSecrets: []
   serviceAccountName: ""
+  automountServiceAccountToken: # true/false; empty - not rendered on the pod
+  enableServiceLinks: # true/false; empty - not rendered on the pod
+  runtimeClassName: "" # e.g. gvisor / kata
+  terminationGracePeriodSeconds: # empty - Kubernetes default (30)
+  updateStrategy: {} # if kind == "StatefulSet", e.g. { type: OnDelete }
+  lifecycle: {} # main container lifecycle (preStop/postStart)
   podSecurityContext: {} # for pod level
   securityContext: {} # for container level
   command: []
@@ -166,3 +172,7 @@ ingressRoute:
   #           - path: /
   #     tls:
   #       secretName: example-com-tls
+
+# Arbitrary manifests (Job, Role, RoleBinding, etc.).
+# A string item is rendered through tpl, an object item is emitted as is.
+extraObjects: []

@@ -1,0 +1,13 @@
+{{- /*
+Arbitrary manifests (Job, Role, RoleBinding, etc.).
+A string item is rendered through tpl (.Values, .Release and include are available);
+an object item is emitted as is, without tpl, so literal {{ }} stay intact.
+*/}}
+{{- range .Values.extraObjects }}
+---
+{{- if kindIs "string" . }}
+{{ tpl . $ }}
+{{- else }}
+{{ toYaml . }}
+{{- end }}
+{{- end }}

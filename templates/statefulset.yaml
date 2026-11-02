@@ -22,6 +22,10 @@ spec:
     matchLabels:
       {{- include "universal.selectorLabels" . | nindent 6 }}
   serviceName: {{ include "universal.fullname" . }}-headless
+  {{- with .Values.app.updateStrategy }}
+  updateStrategy:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
   template:
     metadata:
       labels:
