@@ -10,6 +10,9 @@ enableServiceLinks: {{ .Values.app.enableServiceLinks }}
 {{- with .Values.app.runtimeClassName }}
 runtimeClassName: {{ . | quote }}
 {{- end }}
+{{- with .Values.app.priorityClassName }}
+priorityClassName: {{ . | quote }}
+{{- end }}
 {{- if not (kindIs "invalid" .Values.app.terminationGracePeriodSeconds) }}
 terminationGracePeriodSeconds: {{ .Values.app.terminationGracePeriodSeconds }}
 {{- end }}

@@ -1,6 +1,9 @@
 # Changelog
 All notable changes to this chart will be documented in this file.
 
+## [1.7.0] - 2026-11-06
+- app.priorityClassName (рендерится только если задан).
+
 ## [1.6.0] - 2026-11-02
 - app: runtimeClassName, automountServiceAccountToken, enableServiceLinks, terminationGracePeriodSeconds (рендерятся только если заданы).
 - app.lifecycle для основного контейнера.

@@ -38,6 +38,7 @@ app:
   automountServiceAccountToken: # true/false; empty - not rendered on the pod
   enableServiceLinks: # true/false; empty - not rendered on the pod
   runtimeClassName: "" # e.g. gvisor / kata
+  priorityClassName: "" # e.g. a negative-value class for capacity placeholders
   terminationGracePeriodSeconds: # empty - Kubernetes default (30)
   updateStrategy: {} # if kind == "StatefulSet", e.g. { type: OnDelete }
   lifecycle: {} # main container lifecycle (preStop/postStart)
